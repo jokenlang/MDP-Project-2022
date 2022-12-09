@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Kuliah/semester_5/MDP/Project/MDP-Project-2022/app/src/main/res/layout/activity_main.xml" value="0.34193840579710144" />
+        <entry key="..\:/Kuliah/semester_5/MDP/Project/MDP-Project-2022/app/src/main/res/layout/custom_toast_error.xml" value="0.25" />
+        <entry key="..\:/Kuliah/semester_5/MDP/Project/MDP-Project-2022/app/src/main/res/layout/custom_toast_success.xml" value="0.34193840579710144" />
       </map>
     </option>
   </component>
