@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -47,28 +48,60 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             var checkUser = false
             var index = 0
-            for(i in 0 until user.size){
-                if(inUsernameLogin.text.toString() == user[i].username){
-                    //ketemu kembar
-                    checkUser = true
-                    index = i
-                    break
+            var checkInput = checkEmail(inUsernameLogin.text.toString())
+            if(checkInput == false){
+                for(i in 0 until user.size){
+                    if(inUsernameLogin.text.toString() == user[i].username){
+                        //ketemu kembar
+                        checkUser = true
+                        index = i
+                        break
+                    }
                 }
-            }
-            if(checkUser == false){
-                Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                if(inPasswordLogin.text.toString() != user[index].password){
-                    Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
+                if(checkUser == false){
+                    Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
                 }
                 else{
+                    if(inPasswordLogin.text.toString() != user[index].password){
+                        Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
+                    }
+                    else{
 //                    val intent = Intent(this, MainActivity::class.java)
 //                    intent.putExtra("indexa", index)
 //                    startActivity(intent)
-                    Toast.makeText(this@LoginActivity, "Berhasil Login!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, "Berhasil Login!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+            else{
+                for(i in 0 until user.size){
+                    if(inUsernameLogin.text.toString() == user[i].email){
+                        //ketemu kembar
+                        checkUser = true
+                        index = i
+                        break
+                    }
+                }
+                if(checkUser == false){
+                    Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    if(inPasswordLogin.text.toString() != user[index].password){
+                        Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+//                    val intent = Intent(this, MainActivity::class.java)
+//                    intent.putExtra("indexa", index)
+//                    startActivity(intent)
+                        Toast.makeText(this@LoginActivity, "Berhasil Login!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+
         }
+    }
+    private fun checkEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
