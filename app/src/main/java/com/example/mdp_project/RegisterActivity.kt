@@ -1,11 +1,13 @@
 package com.example.mdp_project
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +70,11 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this@RegisterActivity, "Password & Konfirmasi Password tidak sama", Toast.LENGTH_SHORT).show()
             }
             else{
-                if(inNamaRegis.text.toString() == "" || inUsernameRegis.text.toString() == "" || inPassRegis.text.toString() == "" || Role == ""){
+                if(checkEmail(inEmailRegis.text.toString()) == false){
+                    Toast.makeText(this@RegisterActivity, "Email tidak valid", Toast.LENGTH_SHORT).show()
+                }
+//                Log.d("test = ", checkEmail(inEmailRegis.text.toString()).toString())
+                else if(inNamaRegis.text.toString() == "" || inUsernameRegis.text.toString() == "" || inPassRegis.text.toString() == "" || Role == ""){
                     Toast.makeText(this@RegisterActivity, "input error", Toast.LENGTH_SHORT).show()
                 }
                 else{
@@ -121,5 +127,9 @@ class RegisterActivity : AppCompatActivity() {
         inUsernameRegis.setText("")
         inPassRegis.setText("")
         inConfPassRegis.setText("")
+    }
+
+    private fun checkEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
