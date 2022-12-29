@@ -59,11 +59,13 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
                 if(checkUser == false){
-                    Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
+                    Toast(this@LoginActivity).showCustomToast("Username Belum Terdaftar",this@LoginActivity,"error");
                 }
                 else{
                     if(inPasswordLogin.text.toString() != user[index].password){
-                        Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
+                        Toast(this@LoginActivity).showCustomToast("Password tidak cocok",this@LoginActivity,"error");
                     }
                     else{
                         if (user[index].role == "teacher"){
@@ -74,7 +76,8 @@ class LoginActivity : AppCompatActivity() {
 //                    val intent = Intent(this, MainActivity::class.java)
 //                    intent.putExtra("indexa", index)
 //                    startActivity(intent)
-                        Toast.makeText(this@LoginActivity, "Berhasil Login!", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@LoginActivity, "Berhasil Login!", Toast.LENGTH_SHORT).show()
+                        Toast(this@LoginActivity).showCustomToast("Berhasil Login!",this@LoginActivity,"success");
                     }
                 }
             }
@@ -88,11 +91,13 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
                 if(checkUser == false){
-                    Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
+                    Toast(this@LoginActivity).showCustomToast("Username Belum Terdaftar",this@LoginActivity,"error");
                 }
                 else{
                     if(inPasswordLogin.text.toString() != user[index].password){
-                        Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
+                        Toast(this@LoginActivity).showCustomToast("Password tidak cocok",this@LoginActivity,"success");
                     }
                     else{
                         if (user[index].role == "teacher"){
@@ -103,7 +108,8 @@ class LoginActivity : AppCompatActivity() {
 //                    val intent = Intent(this, MainActivity::class.java)
 //                    intent.putExtra("indexa", index)
 //                    startActivity(intent)
-                        Toast.makeText(this@LoginActivity, "Berhasil Login!", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@LoginActivity, "Berhasil Login!", Toast.LENGTH_SHORT).show()
+                        Toast(this@LoginActivity).showCustomToast("Berhasil Login!",this@LoginActivity,"success");
                     }
                 }
             }
