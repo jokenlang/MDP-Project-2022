@@ -66,6 +66,11 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
                     }
                     else{
+                        if (user[index].role == "teacher"){
+                            val intent = Intent(this, TeacherActivity::class.java)
+                            intent.putExtra("indexa", index)
+                            startActivity(intent)
+                        }
 //                    val intent = Intent(this, MainActivity::class.java)
 //                    intent.putExtra("indexa", index)
 //                    startActivity(intent)
@@ -90,6 +95,11 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
                     }
                     else{
+                        if (user[index].role == "teacher"){
+                            val intent = Intent(this, TeacherActivity::class.java)
+                            intent.putExtra("indexa", index)
+                            startActivity(intent)
+                        }
 //                    val intent = Intent(this, MainActivity::class.java)
 //                    intent.putExtra("indexa", index)
 //                    startActivity(intent)
