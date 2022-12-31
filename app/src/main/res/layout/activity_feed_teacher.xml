@@ -8,26 +8,17 @@
     tools:context=".ModuleTeacherActivity">
 
     <TextView
-        android:id="@+id/tvTitleModulesTeacher"
+        android:id="@+id/tvFeedTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Modules"
+        android:text="Feed"
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvModulesTeacher"
+        android:id="@+id/rvFeedTeacher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <Button
-        android:id="@+id/btnAddModulesTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Modules" />
-
+        android:layout_weight="1" />
 </LinearLayout>
