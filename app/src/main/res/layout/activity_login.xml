@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email / Username"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/inPassLogin"
@@ -45,7 +46,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <LinearLayout
             android:id="@+id/a"

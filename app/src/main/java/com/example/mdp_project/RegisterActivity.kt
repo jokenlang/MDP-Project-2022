@@ -104,7 +104,8 @@ class RegisterActivity : AppCompatActivity() {
                             email = email,
                             name = name,
                             password = password,
-                            role = Role
+                            role = Role,
+                            saldo = 0
                         )
                         ioScope.launch {
                             db.userDao().insert(user)

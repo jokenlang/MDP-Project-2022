@@ -7,14 +7,16 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "users")
 class UserEntity(
     @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "username")
+    @ColumnInfo(name = "user_username")
     var username : String,
-    @ColumnInfo(name = "email")
+    @ColumnInfo(name = "user_email")
     var email : String,
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "user_name")
     var name : String,
-    @ColumnInfo(name = "password")
+    @ColumnInfo(name = "user_password")
     var password : String,
-    @ColumnInfo(name = "role")
-    var role : String // student / teacher
+    @ColumnInfo(name = "user_role")
+    var role : String, // student / teacher
+    @ColumnInfo(name = "user_saldo")
+    var saldo : Int // student / teacher
 )
