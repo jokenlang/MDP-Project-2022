@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClassTeacherFragment">
+    android:layout_margin="15sp"
+    android:orientation="vertical"
+    tools:context=".ClassTeacherFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tvNamaKelas"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Nama Kelas :"
+        android:textSize="24sp" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/etNamaKelas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/tvBidangStudiKelas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bidang Studi yang diajarkan :"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/etBidangStudiKelas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btnTambahKelas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Kelas"
+        app:cornerRadius="15sp" />
+</LinearLayout>

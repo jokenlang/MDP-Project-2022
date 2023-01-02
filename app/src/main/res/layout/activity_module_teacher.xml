@@ -4,17 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="15sp"
     android:orientation="vertical"
     tools:context=".ModuleTeacherActivity">
-
-    <TextView
-        android:id="@+id/tvTitleModulesTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Modules"
-        android:textAlignment="center"
-        android:textSize="34sp"
-        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvModulesTeacher"
@@ -28,6 +20,7 @@
         android:id="@+id/btnAddModulesTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Modules" />
+        android:text="Tambah Module"
+        app:cornerRadius="15sp" />
 
 </LinearLayout>
