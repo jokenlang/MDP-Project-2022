@@ -1,7 +1,11 @@
 package com.example.mdp_project
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -32,5 +36,25 @@ class TeacherActivity : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.option_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.itemLogout -> {
+                redirectBack()
+            }
+        }
+        return true
+    }
+
+    private fun redirectBack() {
+        val intent = Intent()
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 }

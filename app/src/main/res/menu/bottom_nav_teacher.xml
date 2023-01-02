@@ -3,8 +3,10 @@
 
     <item
         android:id="@+id/nav_teacher_dashboard"
+        android:icon="@drawable/dashboard_teacher"
         android:title="Dashboard" />
     <item
         android:id="@+id/nav_teacher_class"
+        android:icon="@drawable/class_teacher"
         android:title="Class" />
 </menu>
