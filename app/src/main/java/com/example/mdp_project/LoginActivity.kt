@@ -106,8 +106,10 @@ class LoginActivity : AppCompatActivity() {
                     }
                     else{
                         if (user[index].role == "teacher"){
+                            val username = user[index].username
                             val intent = Intent(this, TeacherActivity::class.java)
                             intent.putExtra("indexa", index)
+                            intent.putExtra("username",username)
                             startActivity(intent)
                         }
 //                    val intent = Intent(this, MainActivity::class.java)

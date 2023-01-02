@@ -37,19 +37,21 @@ class ClassTeacherFragment() : Fragment() {
         var namakelas = etNamaKelas.text.toString()
         var bidangstudi = etBidangStudiKelas.text.toString()
         var Username = arguments?.getString("user")
+
         db = activity?.let { Room.databaseBuilder(it,AppDatabase::class.java, "a").build() }
+
+
 
         btnTambahKelas.setOnClickListener {
             if(etNamaKelas.text.toString() == "" || etBidangStudiKelas.text.toString() == ""){
             }
             else{
-                Log.d("test input : ", namakelas + "-" + bidangstudi + "-" + Username)
-//                insertClass(namakelas,bidangstudi)
+                println( etNamaKelas.text.toString() + "-" + etBidangStudiKelas.text.toString() + "-" + arguments?.getString("user"))
 
                 val Class = ClassEntity(
                     class_id    = null,
                     class_nama         = etNamaKelas.text.toString(),
-                    user_username      = Username.toString(),
+                    user_username      = arguments?.getString("user").toString(),
                     class_bidang_studi = etBidangStudiKelas.text.toString(),
                     class_status       = 1,
                 )
@@ -72,5 +74,6 @@ class ClassTeacherFragment() : Fragment() {
         coroutine.launch {
             db?.classDao()?.insert(Class)
         }
+
     }
 }

@@ -23,6 +23,8 @@ class TeacherActivity : AppCompatActivity() {
 
         val fragment: Fragment = TeacherFragment()
         val bundle = Bundle()
+        bundle.putString("user", username)
+
         fragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
 
@@ -30,13 +32,16 @@ class TeacherActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.nav_teacher_dashboard -> {
                     val fragment: Fragment = TeacherFragment()
-                    val bundle = Bundle()
-                    bundle.putString("user", username)
+
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                 }
                 R.id.nav_teacher_class -> {
                     val fragment: Fragment = ClassTeacherFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    val classFragment = ClassTeacherFragment()
+                    val bundle = Bundle()
+                    bundle.putString("user", username)
+                    classFragment.arguments = bundle
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, classFragment).commit()
                 }
             }
             return@setOnItemSelectedListener true
