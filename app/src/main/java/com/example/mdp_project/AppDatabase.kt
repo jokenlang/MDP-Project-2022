@@ -8,12 +8,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(entities = [
     UserEntity::class,
+    ClassEntity::class,
     ModuleEntity::class,
     PilihanEntity::class,
     QuizEntity::class,
 ], version = 1)
 abstract class AppDatabase:RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun classDao(): ClassDao
     abstract fun moduleDao(): ModuleDao
     abstract fun pilihanDao(): PilihanDao
     abstract fun quizDao(): QuizDao
