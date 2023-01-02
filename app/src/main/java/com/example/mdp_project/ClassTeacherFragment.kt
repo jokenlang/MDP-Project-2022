@@ -1,6 +1,7 @@
 package com.example.mdp_project
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ClassTeacherFragment() : Fragment() {
-    private lateinit var db: AppDatabase
-    val ioScope = CoroutineScope(Dispatchers.IO)
+    private var db: AppDatabase? = null
     private val coroutine = CoroutineScope(Dispatchers.IO)
+    private lateinit var dao: ClassDao
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,13 +34,18 @@ class ClassTeacherFragment() : Fragment() {
         val btnTambahKelas : Button = view.findViewById(R.id.btnTambahKelas)
         val etNamaKelas          : EditText = view.findViewById(R.id.etNamaKelas)
         val etBidangStudiKelas   : EditText = view.findViewById(R.id.etBidangStudiKelas)
-        
+        var namakelas = etNamaKelas.text.toString()
+        var bidangstudi = etBidangStudiKelas.text.toString()
+        var Username = arguments?.getString("user")
+        db = activity?.let { Room.databaseBuilder(it,AppDatabase::class.java, "a").build() }
 
         btnTambahKelas.setOnClickListener {
             if(etNamaKelas.text.toString() == "" || etBidangStudiKelas.text.toString() == ""){
             }
             else{
-                var Username = arguments?.getString("user")
+                Log.d("test input : ", namakelas + "-" + bidangstudi + "-" + Username)
+//                insertClass(namakelas,bidangstudi)
+
                 val Class = ClassEntity(
                     class_id    = null,
                     class_nama         = etNamaKelas.text.toString(),
@@ -47,9 +54,23 @@ class ClassTeacherFragment() : Fragment() {
                     class_status       = 1,
                 )
                 coroutine.launch {
-                    db.classDao().insert(Class)
+                    db?.classDao()?.insert(Class)
                 }
             }
+        }
+    }
+
+    private fun insertClass(namaKelas : String, bidangStudi:String){
+        var Username = arguments?.getString("user")
+        val Class = ClassEntity(
+            class_id    = null,
+            class_nama         = namaKelas,
+            user_username      = Username.toString(),
+            class_bidang_studi = bidangStudi,
+            class_status       = 1,
+        )
+        coroutine.launch {
+            db?.classDao()?.insert(Class)
         }
     }
 }
