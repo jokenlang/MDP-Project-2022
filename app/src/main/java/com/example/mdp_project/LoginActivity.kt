@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var btnLogin        : Button
     lateinit var btnToRegister   : Button
 
+    private val coroutine = CoroutineScope(Dispatchers.IO)
     val user:ArrayList<UserEntity> = ArrayList()
     val ioScope = CoroutineScope(Dispatchers.IO)
     lateinit var db:AppDatabase
@@ -32,9 +33,9 @@ class LoginActivity : AppCompatActivity() {
         inPasswordLogin = findViewById(R.id.inPassLogin)
         btnLogin = findViewById(R.id.btnLogin)
         btnToRegister = findViewById(R.id.btnToRegister)
-
+        db = AppDatabase.build(this)
         db = Room.databaseBuilder(baseContext, AppDatabase::class.java, "a").build()
-        ioScope.launch{
+        coroutine.launch{
             val tempUser = db.userDao().getAll()
             user.clear()
             user.addAll(tempUser)
@@ -68,9 +69,13 @@ class LoginActivity : AppCompatActivity() {
                         Toast(this@LoginActivity).showCustomToast("Password tidak cocok",this@LoginActivity,"error");
                     }
                     else{
+                        var username = user[index].username
+                        var nama = user[index].name
                         if (user[index].role == "teacher"){
                             val intent = Intent(this, TeacherActivity::class.java)
                             intent.putExtra("indexa", index)
+                            intent.putExtra("username",username)
+                            intent.putExtra("nama",nama)
                             startActivity(intent)
                         }
 //                    val intent = Intent(this, MainActivity::class.java)

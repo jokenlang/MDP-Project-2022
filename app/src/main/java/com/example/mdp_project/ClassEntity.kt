@@ -6,9 +6,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "class")
 class ClassEntity (
     @PrimaryKey (autoGenerate = true)
-    var class_id : Int,
+    var class_id : Int?,
     var class_nama : String,
-    var user_id : Int,
+    var user_username : String,
+    var class_bidang_studi : String,
     var class_status : Int
 
 ){

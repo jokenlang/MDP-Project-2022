@@ -8,6 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class TeacherActivity : AppCompatActivity() {
     private lateinit var bottom_navigation: BottomNavigationView
@@ -15,7 +17,8 @@ class TeacherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher)
-
+//        var index = intent.getIntExtra("indexa",0)rDao().getAll()
+        var username = intent.getStringExtra("username")
         bottom_navigation = findViewById(R.id.bottom_navigation)
 
         val fragment: Fragment = TeacherFragment()
@@ -27,6 +30,8 @@ class TeacherActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.nav_teacher_dashboard -> {
                     val fragment: Fragment = TeacherFragment()
+                    val bundle = Bundle()
+                    bundle.putString("user", username)
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                 }
                 R.id.nav_teacher_class -> {
