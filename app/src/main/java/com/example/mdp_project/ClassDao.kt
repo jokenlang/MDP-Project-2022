@@ -18,4 +18,7 @@ interface ClassDao {
 
     @Query("SELECT * FROM class where class_id = :class_id")
     suspend fun get(class_id:Int):ClassEntity?
+
+    @Query("select * from class")
+    fun getAll(): List<ClassEntity>
 }
