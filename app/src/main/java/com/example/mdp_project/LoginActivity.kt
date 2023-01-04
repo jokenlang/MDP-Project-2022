@@ -47,6 +47,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
+            coroutine.launch{
+                val tempUser = db.userDao().getAll()
+                user.clear()
+                user.addAll(tempUser)
+            }
             var checkUser = false
             var index = 0
             var checkInput = checkEmail(inUsernameLogin.text.toString())
