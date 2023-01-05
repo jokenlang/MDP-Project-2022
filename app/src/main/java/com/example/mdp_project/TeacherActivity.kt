@@ -10,28 +10,48 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.ArrayList
 
 class TeacherActivity : AppCompatActivity() {
     private lateinit var bottom_navigation: BottomNavigationView
 
+    private lateinit var kelas: ArrayList<ClassEntity>
+
+    private lateinit var ClassDashboardTeacherAdapter: ClassDashboardTeacherAdapter
+
+    lateinit var db: AppDatabase
+    val ioScope = CoroutineScope(Dispatchers.IO)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher)
+
+        db = AppDatabase.build(this)
+
 //        var index = intent.getIntExtra("indexa",0)rDao().getAll()
         var username = intent.getStringExtra("username")
         bottom_navigation = findViewById(R.id.bottom_navigation)
 
-        val fragment: Fragment = TeacherFragment()
-        val bundle = Bundle()
-        bundle.putString("user", username)
+        ioScope.launch {
+            kelas = db.classDao().getAll() as ArrayList<ClassEntity>
 
-        fragment.arguments = bundle
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+            ClassDashboardTeacherAdapter = ClassDashboardTeacherAdapter(this@TeacherActivity, kelas){
+                    idx ->
+                val intent = Intent(this@TeacherActivity, AddModuleClassTeacherActivity::class.java)
+                intent.putExtra("idx", idx.toString())
+                startActivity(intent)
+            }
+            val teacher_fragment = TeacherFragment(ClassDashboardTeacherAdapter)
+            val fragmentManager = supportFragmentManager.beginTransaction()
+            fragmentManager.replace(R.id.fragment_container, teacher_fragment)
+            fragmentManager.commit()
+        }
 
         bottom_navigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_teacher_dashboard -> {
-                    val fragment: Fragment = TeacherFragment()
+                    val fragment: Fragment = TeacherFragment(ClassDashboardTeacherAdapter)
 
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                 }

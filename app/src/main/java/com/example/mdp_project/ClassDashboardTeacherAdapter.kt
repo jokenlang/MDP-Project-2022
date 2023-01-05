@@ -10,21 +10,26 @@ import androidx.recyclerview.widget.RecyclerView
 
 data class ClassDashboardTeacherAdapter (
     private val context: Activity,
-    private val layout: Int,
-    private val kelas: ArrayList<ClassEntity>
+    private val kelas: ArrayList<ClassEntity>,
+    val click:(id:Int)->Unit,
 ): RecyclerView.Adapter<ClassDashboardTeacherAdapter.CustomViewHolder>() {
     inner class CustomViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val tvClass: TextView = itemView.findViewById(R.id.tvListClassDashboard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        return CustomViewHolder(LayoutInflater.from(parent.context).inflate(layout, parent, false))
+        var itemView = LayoutInflater.from(parent.context)
+        return CustomViewHolder(itemView.inflate(
+            R.layout.list_class_dashboard_teacher, parent ,false
+        ))
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val item = kelas[position]
-        print(item.class_nama)
         holder.tvClass.text = item.class_nama
+        holder.itemView.setOnClickListener {
+            item.class_id?.let { it1 -> click(it1) }
+        }
     }
 
     override fun getItemCount(): Int {

@@ -1,6 +1,7 @@
 package com.example.mdp_project
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,13 +18,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TeacherFragment : Fragment() {
+class TeacherFragment (
+    var adapter: ClassDashboardTeacherAdapter
+): Fragment() {
 
     var kelas: ArrayList<ClassEntity> = arrayListOf()
     private lateinit var db: AppDatabase
     private val ioScope = CoroutineScope(Dispatchers.IO)
     private lateinit var rvDashboardTeacher: RecyclerView
-    private lateinit var classAdapter: ClassDashboardTeacherAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +53,9 @@ class TeacherFragment : Fragment() {
             resetUI()
 
             activity?.runOnUiThread {
-                classAdapter = ClassDashboardTeacherAdapter(context as Activity, R.layout.list_class_dashboard_teacher, kelas)
-                rvDashboardTeacher.adapter = classAdapter
+                rvDashboardTeacher.adapter = adapter
                 rvDashboardTeacher.addItemDecoration(DividerItemDecoration(rvDashboardTeacher.context, DividerItemDecoration.VERTICAL))
-                classAdapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
         }
     }
@@ -65,7 +66,7 @@ class TeacherFragment : Fragment() {
             kelas.addAll(db.classDao().getAll())
 
             activity?.runOnUiThread {
-                classAdapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
         }
     }
