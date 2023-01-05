@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical"
     tools:context=".DetailQuizActivityTeacher">
 
@@ -67,20 +68,14 @@
         android:hint="Pilihan 3"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/etPil4DetailQuizTeacher"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Pilihan 4"
-        android:inputType="textPersonName" />
+        android:layout_height="340dp" />
 
     <Button
         android:id="@+id/btnSaveDetailQuizTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
         android:text="Save" />
 
 </LinearLayout>

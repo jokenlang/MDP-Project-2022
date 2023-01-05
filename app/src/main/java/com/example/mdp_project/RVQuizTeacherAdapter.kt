@@ -28,7 +28,10 @@ class RVQuizTeacherAdapter(
         val item = listQuiz[position]
         holder.tvNama.text = item.quiz_nama
         holder.btnDetail.setOnClickListener {
-            onItemClickListener(item.quiz_id!!,"detail")
+            onItemClickListener(item.quiz_id!!,"edit")
+        }
+        holder.btnDelete.setOnClickListener {
+            onItemClickListener(item.quiz_id!!,"delete")
         }
 
 
@@ -42,6 +45,6 @@ class RVQuizTeacherAdapter(
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNama: TextView = itemView.findViewById(R.id.tvNamaListQuizRV)
         val btnDetail : Button = itemView.findViewById(R.id.btnEditListQuizRV)
-
+        val btnDelete : Button = itemView.findViewById(R.id.btnDeleteListQuizRV)
     }
 }

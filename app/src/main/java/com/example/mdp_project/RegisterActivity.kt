@@ -68,7 +68,7 @@ class RegisterActivity : AppCompatActivity() {
         btnRegister.setOnClickListener {
             if(inPassRegis.text.toString() != inConfPassRegis.text.toString()){
 //                Toast.makeText(this@RegisterActivity, "Password & Konfirmasi Password tidak sama", Toast.LENGTH_SHORT).show()
-                Toast(this@RegisterActivity).showCustomToast("Password dan Konfirmasi Password tidak sama",this@RegisterActivity,"error");
+                Toast(this@RegisterActivity).showCustomToast("Password tidak sama",this@RegisterActivity,"error");
             }
             else{
                 if(checkEmail(inEmailRegis.text.toString()) == false){
@@ -112,7 +112,7 @@ class RegisterActivity : AppCompatActivity() {
                         }
 //                        Toast.makeText(this@RegisterActivity, "Berhasil mendaftarkan user ke database", Toast.LENGTH_SHORT).show()
 
-                        Toast(this@RegisterActivity).showCustomToast("Berhasil mendaftarkan user ke database",this@RegisterActivity,"success");
+                        Toast(this@RegisterActivity).showCustomToast("Berhasil mendaftarkan user",this@RegisterActivity,"success");
                         clearInput()
                     }
                 }

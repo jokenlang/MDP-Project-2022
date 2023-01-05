@@ -18,4 +18,5 @@ interface PilihanDao {
 
     @Query("SELECT * FROM pilihan where pilihan_id = :pilihan_id")
     suspend fun get(pilihan_id:Int):PilihanEntity?
+
 }
