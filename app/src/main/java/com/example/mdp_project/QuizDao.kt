@@ -16,6 +16,9 @@ interface QuizDao {
     @Query("SELECT * FROM quiz")
     suspend fun fetch():List<QuizEntity>
 
+    @Query("SELECT * FROM quiz where module_id = :module_id")
+    suspend fun fetchByModule(module_id:Int):List<QuizEntity>
+
     @Query("SELECT * FROM quiz where quiz_id = :quiz_id")
     suspend fun get(quiz_id:Int):QuizEntity?
 }
