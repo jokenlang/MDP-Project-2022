@@ -38,7 +38,7 @@ class TeacherActivity : AppCompatActivity() {
 
             ClassDashboardTeacherAdapter = ClassDashboardTeacherAdapter(this@TeacherActivity, kelas){
                     idx ->
-                val intent = Intent(this@TeacherActivity, AddModuleClassTeacherActivity::class.java)
+                val intent = Intent(this@TeacherActivity, ModuleTeacherActivity::class.java)
                 intent.putExtra("idx", idx.toString())
                 startActivity(intent)
             }
@@ -51,9 +51,20 @@ class TeacherActivity : AppCompatActivity() {
         bottom_navigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_teacher_dashboard -> {
-                    val fragment: Fragment = TeacherFragment(ClassDashboardTeacherAdapter)
+                    ioScope.launch {
+                        kelas = db.classDao().getAll() as ArrayList<ClassEntity>
 
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                        ClassDashboardTeacherAdapter = ClassDashboardTeacherAdapter(this@TeacherActivity, kelas){
+                                idx ->
+                            val intent = Intent(this@TeacherActivity, ModuleTeacherActivity::class.java)
+                            intent.putExtra("idx", idx.toString())
+                            startActivity(intent)
+                        }
+                        val teacher_fragment = TeacherFragment(ClassDashboardTeacherAdapter)
+                        val fragmentManager = supportFragmentManager.beginTransaction()
+                        fragmentManager.replace(R.id.fragment_container, teacher_fragment)
+                        fragmentManager.commit()
+                    }
                 }
                 R.id.nav_teacher_class -> {
                     val fragment: Fragment = ClassTeacherFragment()
