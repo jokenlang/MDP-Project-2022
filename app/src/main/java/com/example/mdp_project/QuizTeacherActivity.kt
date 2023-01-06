@@ -28,7 +28,8 @@ class QuizTeacherActivity : AppCompatActivity() {
         listQuiz = mutableListOf()
 
         db = AppDatabase.build(this)
-        idxModule = intent.getStringExtra("idx")!!.toInt()
+        idxModule = intent.getStringExtra("idxModule")!!.toInt()
+        Toast.makeText(this, "$idxModule", Toast.LENGTH_SHORT).show()
         btnAdd = findViewById(R.id.btnAddQuizTeacher)
         rvQuiz = findViewById(R.id.rvQuizTeacher)
         tvModule = findViewById(R.id.tvNamaModuleQuizTeacher)

@@ -18,4 +18,7 @@ interface ModuleDao {
 
     @Query("SELECT * FROM module where module_id = :module_id")
     suspend fun get(module_id:Int):ModuleEntity?
+
+    @Query("SELECT * FROM module where class_id = :class_id")
+    suspend fun getModulesByClass(class_id:Int):List<ModuleEntity>
 }
