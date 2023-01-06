@@ -1,6 +1,8 @@
 package com.example.mdp_project
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +26,9 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
     var idxQuiz : Int = -1
     var idxModule : Int = -1
     lateinit var listQuiz : MutableList<QuizEntity>
+    lateinit var quiz : QuizEntity
     lateinit var listPilihan : MutableList<PilihanEntity>
+    lateinit var listPilihanTemp : MutableList<PilihanEntity>
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var db: AppDatabase
     var jawaban : Int  = 1
@@ -37,6 +41,7 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
         db = AppDatabase.build(this)
         listQuiz = mutableListOf()
         listPilihan = mutableListOf()
+        listPilihanTemp = mutableListOf()
         etSoal = findViewById(R.id.etSoalDetailQuizTeacher)
         etPil1 = findViewById(R.id.etPil1DetailQuizTeacher)
         etPil2 = findViewById(R.id.etPil2DetailQuizTeacher)
@@ -44,8 +49,6 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
         btnSave = findViewById(R.id.btnSaveDetailQuizTeacher)
         var mode = intent.getStringExtra("mode")!!
 
-        jawaban = 1
-        etPil1.setBackgroundResource(R.color.teal_700)
 
         coroutine.launch {
             refreshQuiz()
@@ -53,9 +56,32 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
         if (mode == "edit") {
             // isi inputan sebelumnya
             idxQuiz = intent.getIntExtra("quiz_id",-1)
+            coroutine.launch {
+                quiz = db.quizDao().get(idxQuiz)!!
+                listPilihanTemp.clear()
+                listPilihanTemp.addAll(db.pilihanDao().fetchByQuiz(idxQuiz).toMutableList())
+                if(quiz.pilihan_id == listPilihanTemp[0].pilihan_id) {
+                    jawaban = 1
+                    etPil1.setBackgroundResource(R.color.teal_700)
+                }
+                else if(quiz.pilihan_id == listPilihanTemp[1].pilihan_id) {
+                    jawaban = 2
+                    etPil2.setBackgroundResource(R.color.teal_700)
+                }
+                else if(quiz.pilihan_id == listPilihanTemp[2].pilihan_id){
+                    jawaban = 3
+                    etPil3.setBackgroundResource(R.color.teal_700)
+                }
+                etSoal.setText(quiz.quiz_nama)
+                etPil1.setText(listPilihanTemp[0].pilihan_nama)
+                etPil2.setText(listPilihanTemp[1].pilihan_nama)
+                etPil3.setText(listPilihanTemp[2].pilihan_nama)
+            }
         }
         else if(mode == "add") {
             idxModule = intent.getIntExtra("module_id",-1)
+            jawaban = 1
+            etPil1.setBackgroundResource(R.color.teal_700)
         }
 
         etPil1.setOnClickListener {
@@ -64,6 +90,7 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
             etPil3.setBackgroundResource(R.color.white)
             jawaban = 1
         }
+        
         etPil2.setOnClickListener {
             etPil2.setBackgroundResource(R.color.teal_700)
             etPil1.setBackgroundResource(R.color.white)
@@ -122,12 +149,36 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
                         }
                     }
                     Toast(this).showCustomToast("Berhasil tambah quiz",this,"success")
-                    finish()
+//                    finish()
                 }
             }
             else if(mode == "edit") {
+                //ganti textnya
+                listPilihanTemp[0].pilihan_nama = etPil1.text.toString()
+                listPilihanTemp[1].pilihan_nama = etPil2.text.toString()
+                listPilihanTemp[2].pilihan_nama = etPil3.text.toString()
+                quiz.quiz_nama = etSoal.text.toString()
+                if(jawaban == 1) {
+                    quiz.pilihan_id = listPilihanTemp[0].pilihan_id
+                }
+                else if(jawaban == 2) {
+                    quiz.pilihan_id = listPilihanTemp[1].pilihan_id
 
+                }
+                else if(jawaban == 3) {
+                    quiz.pilihan_id = listPilihanTemp[2].pilihan_id
+                }
+                coroutine.launch {
+                    db.quizDao().update(quiz)
+                    for (i in 0 until listPilihanTemp.size) {
+                        db.pilihanDao().update(listPilihanTemp[i])
+                    }
+                }
+                Toast(this).showCustomToast("Berhasil edit quiz",this,"success")
             }
+            val resultIntent = Intent()
+            setResult(Activity.RESULT_OK, resultIntent)
+            finish()
         }
     }
 

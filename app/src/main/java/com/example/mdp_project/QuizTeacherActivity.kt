@@ -1,11 +1,15 @@
 package com.example.mdp_project
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +26,8 @@ class QuizTeacherActivity : AppCompatActivity() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var db: AppDatabase
     lateinit var module: ModuleEntity
+    lateinit var addLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_teacher)
@@ -29,7 +35,7 @@ class QuizTeacherActivity : AppCompatActivity() {
 
         db = AppDatabase.build(this)
         idxModule = intent.getStringExtra("idxModule")!!.toInt()
-        Toast.makeText(this, "$idxModule", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "$idxModule", Toast.LENGTH_SHORT).show()
         btnAdd = findViewById(R.id.btnAddQuizTeacher)
         rvQuiz = findViewById(R.id.rvQuizTeacher)
         tvModule = findViewById(R.id.tvNamaModuleQuizTeacher)
@@ -40,6 +46,15 @@ class QuizTeacherActivity : AppCompatActivity() {
             refreshQuiz()
         }
 
+        addLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                coroutine.launch {
+                    refreshQuiz()
+                }
+                setRV()
+            }
+        }
+
 
         setRV()
 
@@ -47,7 +62,7 @@ class QuizTeacherActivity : AppCompatActivity() {
             var intent = Intent(this, DetailQuizActivityTeacher::class.java)
             intent.putExtra("module_id",idxModule)
             intent.putExtra("mode","add")
-            startActivity(intent)
+            addLauncher.launch(intent)
         }
 
     }
@@ -64,18 +79,22 @@ class QuizTeacherActivity : AppCompatActivity() {
                 var intent = Intent(this, DetailQuizActivityTeacher::class.java)
                 intent.putExtra("quiz_id",id)
                 intent.putExtra("mode","edit")
-                startActivity(intent)
+                addLauncher.launch(intent)
             }
             else if(mode == "delete") {
                 coroutine.launch {
                     var temp = db.quizDao().get(id)!!
                     temp.quiz_status = 0
                     db.quizDao().update(temp)
+                    refreshQuiz()
                 }
+                setRV()
+
                 Toast(this).showCustomToast("Berhasil Delete",this,"success")
             }
         }
         rvQuiz.adapter = rvQuizAdapter
         rvQuiz.layoutManager = verLayoutManager
     }
+
 }

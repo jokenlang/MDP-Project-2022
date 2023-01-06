@@ -29,7 +29,9 @@
             android:id="@+id/btnDeleteListQuizRV"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:backgroundTint="#FF0000"
+            android:cursorVisible="false"
             app:icon="@android:drawable/ic_delete" />
 
     </LinearLayout>

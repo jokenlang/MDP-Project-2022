@@ -18,8 +18,7 @@
             android:exported="false" />
         <activity
             android:name=".DetailQuizActivityTeacher"
-            android:exported="false"
-            android:parentActivityName=".QuizTeacherActivity" />
+            android:exported="false" />
         <activity
             android:name=".QuizTeacherActivity"
             android:exported="false" />
