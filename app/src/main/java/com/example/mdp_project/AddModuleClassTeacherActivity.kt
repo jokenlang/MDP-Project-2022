@@ -17,7 +17,6 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
     private lateinit var ModuleDao: ModuleDao
 
     private lateinit var etNamaModule: EditText
-    private lateinit var etJumlahSoalModule: EditText
     private lateinit var btnNextModule: Button
 
     lateinit var idx: String
@@ -32,11 +31,10 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
         db = AppDatabase.build(this)
 
         etNamaModule = findViewById(R.id.etNamaModule)
-        etJumlahSoalModule = findViewById(R.id.etJumlahSoalModule)
         btnNextModule = findViewById(R.id.btnNextModule)
 
         btnNextModule.setOnClickListener {
-            if(etNamaModule.text.toString() == "" || etJumlahSoalModule.text.toString() == ""){
+            if(etNamaModule.text.toString() == ""){
             }
             else{
                 val module = ModuleEntity(
