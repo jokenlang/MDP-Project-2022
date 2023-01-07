@@ -10,7 +10,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.mdp_project"
+        applicationId "com.mdp_sustainable_goals.course"
         minSdk 22
         targetSdk 32
         versionCode 1

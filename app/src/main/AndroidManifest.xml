@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.mdp_project">
-
+    package="com.mdp_sustainable_goals.course">
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,41 +10,39 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MDPProject"
+        android:theme="@style/Theme.Course"
         tools:targetApi="31">
         <activity
-            android:name=".AddModuleClassTeacherActivity"
+            android:name="com.mdp_sustainable_goals.course.student.activity.StudentActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailQuizActivityTeacher"
+            android:name="com.mdp_sustainable_goals.course.teacher.activity.AddModuleClassTeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".QuizTeacherActivity"
+            android:name="com.mdp_sustainable_goals.course.teacher.activity.DetailQuizActivityTeacher"
             android:exported="false" />
         <activity
-            android:name=".FeedTeacherActivity"
+            android:name="com.mdp_sustainable_goals.course.teacher.activity.QuizTeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".ModuleTeacherActivity"
+            android:name="com.mdp_sustainable_goals.course.teacher.activity.FeedTeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".TeacherActivity"
+            android:name="com.mdp_sustainable_goals.course.teacher.activity.ModuleTeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.mdp_sustainable_goals.course.teacher.activity.TeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.mdp_sustainable_goals.course.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.mdp_sustainable_goals.course.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

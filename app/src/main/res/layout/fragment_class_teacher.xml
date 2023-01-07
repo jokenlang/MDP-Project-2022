@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="15sp"
     android:orientation="vertical"
-    tools:context=".ClassTeacherFragment" >
+    tools:context=".teacher.fragment.ClassTeacherFragment" >
 
     <TextView
         android:id="@+id/tvNamaKelas"

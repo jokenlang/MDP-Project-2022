@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="15sp"
     android:orientation="vertical"
-    tools:context=".ModuleTeacherActivity">
+    tools:context=".teacher.activity.ModuleTeacherActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvModulesTeacher"
