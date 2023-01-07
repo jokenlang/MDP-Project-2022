@@ -34,11 +34,17 @@ class LoginActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.btnLogin)
         btnToRegister = findViewById(R.id.btnToRegister)
         db = AppDatabase.build(this)
-        db = Room.databaseBuilder(baseContext, AppDatabase::class.java, "a").build()
+        db = Room.databaseBuilder(baseContext, AppDatabase::class.java, "a").allowMainThreadQueries().build()
+
         coroutine.launch{
-            val tempUser = db.userDao().getAll()
-            user.clear()
-            user.addAll(tempUser)
+            if(db.userDao().getAll() == null){
+
+            }
+            else{
+                val tempUser = db.userDao().getAll()
+                user.clear()
+                user.addAll(tempUser)
+            }
         }
 
         btnToRegister.setOnClickListener {
@@ -47,10 +53,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-            coroutine.launch{
-                val tempUser = db.userDao().getAll()
-                user.clear()
-                user.addAll(tempUser)
+            coroutine.run{
+                if(db.userDao().getAll() == null){
+
+                }
+                else{
+                    val tempUser = db.userDao().getAll()
+                    user.clear()
+                    user.addAll(tempUser)
+                }
             }
             var checkUser = false
             var index = 0

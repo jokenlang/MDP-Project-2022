@@ -45,11 +45,16 @@ class RegisterActivity : AppCompatActivity() {
 
         db = Room.databaseBuilder(baseContext, AppDatabase::class.java, "a").build()
         ioScope.launch {
-            val tempUsername = db.userDao().getAll()
-            username.clear()
-            for (i in 1 until tempUsername.size)
-            {
-                username.add(tempUsername[i].username)
+            if (db.userDao().getAll() == null){
+
+            }
+            else{
+                val tempUsername = db.userDao().getAll()
+                username.clear()
+                for (i in 1 until tempUsername.size)
+                {
+                    username.add(tempUsername[i].username)
+                }
             }
         }
 
