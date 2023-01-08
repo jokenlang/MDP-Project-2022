@@ -1,9 +1,14 @@
 package com.mdp_sustainable_goals.course.teacher.activity
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,14 +44,26 @@ class ModuleTeacherActivity : AppCompatActivity() {
         btnAddModulesTeacher = findViewById(R.id.btnAddModulesTeacher)
         rvModulesTeacher = findViewById(R.id.rvModulesTeacher)
 
+        val toAddModule = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+                result: ActivityResult ->
+            if(result.resultCode == RESULT_OK){
+                val data = result.data
+                if(data != null){
+                    resetUI()
+                }
+            }
+            else if (result.resultCode == Activity.RESULT_CANCELED){
+
+            }
+        }
+
         btnAddModulesTeacher.setOnClickListener {
             val intent = Intent(
                 this@ModuleTeacherActivity,
                 AddModuleClassTeacherActivity::class.java
             )
             intent.putExtra("idx", idx.toString())
-            startActivity(intent)
-            resetUI()
+            toAddModule.launch(intent)
         }
 
         val verticalLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

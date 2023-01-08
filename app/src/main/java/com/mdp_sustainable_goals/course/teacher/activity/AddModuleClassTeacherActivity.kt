@@ -1,5 +1,7 @@
 package com.mdp_sustainable_goals.course.teacher.activity
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -47,8 +49,10 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
                 ioScope.launch {
                     db?.moduleDao()?.insert(module)
                 }
+                var resultIntent = Intent()
+                resultIntent.putExtra("message", "Success add Module")
+                setResult(Activity.RESULT_OK, resultIntent)
                 finish()
-                // next jumlah soal dan jawaban
             }
         }
     }
