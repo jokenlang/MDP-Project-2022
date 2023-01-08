@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clListModule"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="15sp"
-    android:layout_marginTop="25sp"
-    android:layout_marginRight="15sp"
-    android:layout_marginBottom="25sp"
-    android:orientation="vertical">
+    android:layout_margin="4dp"
+    android:background="@drawable/rounded_corner">
 
     <TextView
         android:id="@+id/tvListModuleName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.307" />
 
     <TextView
         android:id="@+id/tvJumlahKumpulModule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Jumlah sudah kumpul : 0/20" />
-</LinearLayout>
+        android:layout_marginBottom="20sp"
+        android:text="Jumlah sudah kumpul : 0/20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvListModuleName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

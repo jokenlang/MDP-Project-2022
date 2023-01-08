@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.room.Room
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
@@ -38,11 +39,9 @@ class ClassTeacherFragment() : Fragment() {
         val etBidangStudiKelas: EditText = view.findViewById(R.id.etBidangStudiKelas)
         var namakelas = etNamaKelas.text.toString()
         var bidangstudi = etBidangStudiKelas.text.toString()
-        var Username = arguments?.getString("user")
+        var username = arguments?.getString("username")
 
         db = activity?.let { Room.databaseBuilder(it, AppDatabase::class.java, "a").build() }
-
-
 
         btnTambahKelas.setOnClickListener {
             if (etNamaKelas.text.toString() == "" || etBidangStudiKelas.text.toString() == "") {

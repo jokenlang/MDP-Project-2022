@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +45,9 @@ class TeacherDashboardFragment(
 
         rvDashboardTeacher = view.findViewById(R.id.rvDashboardTeacher)
 
+        var user_name = arguments?.getString("user_name")
+        var tvDashboardTeacherName: TextView = view.findViewById(R.id.tvDashboardTeacherName)
+        tvDashboardTeacherName.setText("Welcome, $user_name")
         val verticalLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rvDashboardTeacher.layoutManager = verticalLayoutManager

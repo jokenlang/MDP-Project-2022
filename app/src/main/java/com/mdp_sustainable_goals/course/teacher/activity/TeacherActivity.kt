@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
+import com.mdp_sustainable_goals.course.local_storage.entity.UserEntity
 import com.mdp_sustainable_goals.course.teacher.fragment.ClassTeacherFragment
 import com.mdp_sustainable_goals.course.teacher.fragment.TeacherDashboardFragment
 import com.mdp_sustainable_goals.course.teacher.adapter.ClassDashboardTeacherAdapter
@@ -27,6 +28,8 @@ class TeacherActivity : AppCompatActivity() {
     lateinit var db: AppDatabase
     val ioScope = CoroutineScope(Dispatchers.IO)
 
+    private lateinit var user: UserEntity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher)
@@ -38,6 +41,7 @@ class TeacherActivity : AppCompatActivity() {
         bottom_navigation = findViewById(R.id.bottom_navigation)
 
         ioScope.launch {
+            user = username?.let { db.userDao().getUser(it) } as UserEntity
             kelas = db.classDao().getAll() as ArrayList<ClassEntity>
             ClassDashboardTeacherAdapter =
                 ClassDashboardTeacherAdapter(this@TeacherActivity, kelas) { idx ->
@@ -46,6 +50,9 @@ class TeacherActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             val teacher_fragment = TeacherDashboardFragment(ClassDashboardTeacherAdapter)
+            val bundle = Bundle()
+            bundle.putString("user_name", user.name)
+            teacher_fragment.arguments = bundle
             val fragmentManager = supportFragmentManager.beginTransaction()
             fragmentManager.replace(R.id.fragment_container, teacher_fragment)
             fragmentManager.commit()
@@ -64,6 +71,9 @@ class TeacherActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                         val teacher_fragment = TeacherDashboardFragment(ClassDashboardTeacherAdapter)
+                        val bundle = Bundle()
+                        bundle.putString("user_name", user.name)
+                        teacher_fragment.arguments = bundle
                         val fragmentManager = supportFragmentManager.beginTransaction()
                         fragmentManager.replace(R.id.fragment_container, teacher_fragment)
                         fragmentManager.commit()
