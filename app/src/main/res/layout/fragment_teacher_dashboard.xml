@@ -14,6 +14,14 @@
         android:text="Welcome, Nama Teacher"
         android:textSize="20sp" />
 
+    <TextView
+        android:id="@+id/tvTitleRVClassTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Class"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDashboardTeacher"
         android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import com.mdp_sustainable_goals.course.local_storage.entity.*
         ModuleEntity::class,
         PilihanEntity::class,
         QuizEntity::class,
+        JoinClassEntity::class,
     ], version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -20,6 +21,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun moduleDao(): ModuleDao
     abstract fun pilihanDao(): PilihanDao
     abstract fun quizDao(): QuizDao
+    abstract fun joinClassDao(): JoinClassDao
 
     companion object {
         private var _database: AppDatabase? = null

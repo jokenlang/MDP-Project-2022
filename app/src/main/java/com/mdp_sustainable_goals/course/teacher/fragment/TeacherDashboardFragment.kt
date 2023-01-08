@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
@@ -49,7 +50,7 @@ class TeacherDashboardFragment(
         var tvDashboardTeacherName: TextView = view.findViewById(R.id.tvDashboardTeacherName)
         tvDashboardTeacherName.setText("Welcome, $user_name")
         val verticalLayoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            GridLayoutManager(context, 3)
         rvDashboardTeacher.layoutManager = verticalLayoutManager
 
         ioScope.launch {

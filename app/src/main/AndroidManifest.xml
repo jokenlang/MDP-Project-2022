@@ -36,6 +36,9 @@
             android:name="com.mdp_sustainable_goals.course.teacher.activity.TeacherActivity"
             android:exported="false" />
         <activity
+            android:name="com.mdp_sustainable_goals.course.teacher.activity.ListStudentActivity"
+            android:exported="false" />
+        <activity
             android:name="com.mdp_sustainable_goals.course.RegisterActivity"
             android:exported="false" />
         <activity

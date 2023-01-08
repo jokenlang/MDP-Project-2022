@@ -24,6 +24,7 @@ class ModuleTeacherActivity : AppCompatActivity() {
     lateinit var idx: String
 
     private lateinit var btnAddModulesTeacher: Button
+    private lateinit var btnListStudentClassTeacher: Button
     private lateinit var rvModulesTeacher: RecyclerView
     private lateinit var ClassModuleTeacherAdapter: ClassModuleTeacherAdapter
 
@@ -56,7 +57,14 @@ class ModuleTeacherActivity : AppCompatActivity() {
 
             }
         }
+        btnListStudentClassTeacher = findViewById(R.id.btnListStudentClassTeacher)
 
+        btnListStudentClassTeacher.setOnClickListener {
+            val intent =
+                Intent(this@ModuleTeacherActivity, ListStudentActivity::class.java)
+            intent.putExtra("idx", idx.toString())
+            startActivity(intent)
+        }
         btnAddModulesTeacher.setOnClickListener {
             val intent = Intent(
                 this@ModuleTeacherActivity,

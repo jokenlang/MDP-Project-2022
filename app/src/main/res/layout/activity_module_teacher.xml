@@ -8,6 +8,13 @@
     android:orientation="vertical"
     tools:context=".teacher.activity.ModuleTeacherActivity">
 
+    <Button
+        android:id="@+id/btnListStudentClassTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List Student"
+        app:cornerRadius="15sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvModulesTeacher"
         android:layout_width="match_parent"

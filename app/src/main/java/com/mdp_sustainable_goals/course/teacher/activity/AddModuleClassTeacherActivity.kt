@@ -37,6 +37,7 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
         etNamaModule = findViewById(R.id.etNamaModule)
         btnNextModule = findViewById(R.id.btnNextModule)
 
+
         btnNextModule.setOnClickListener {
             if (etNamaModule.text.toString() == "") {
             } else {
