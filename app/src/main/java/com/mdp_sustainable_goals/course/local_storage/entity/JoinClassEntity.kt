@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class JoinClassEntity(
     @PrimaryKey(autoGenerate = true)
     var join_class_id: Int?,
-    var user_id: String,
+    var user_username: String,
     var class_id: Int,
 ) {
 }

@@ -5,11 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".student.activity.StudentActivity">
+    tools:context="com.mdp_sustainable_goals.course.student.activity.JoinClassStudentActivity">
 
-    <Button
-        android:id="@+id/btnToJoinClass"
+    <TextView
+        android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To Join Class Activity" />
+        android:text="Join Class"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvJoinClassStudent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
