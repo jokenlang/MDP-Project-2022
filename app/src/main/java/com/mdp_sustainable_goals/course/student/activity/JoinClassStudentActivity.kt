@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
@@ -58,8 +59,8 @@ class JoinClassStudentActivity : AppCompatActivity() {
     }
 
     fun setRV() {
-        val verLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvJoinAdapter = RVJoinClassStudent(listClass, R.layout.list_class_join_student, this) { id ->
+        val grid = GridLayoutManager(this,2)
+        rvJoinAdapter = RVJoinClassStudent(listClass, R.layout.list_class_join_student, this,db) { id ->
             coroutine.launch {
                 var jc = JoinClassEntity(null,username,id)
                 db.joinClassDao().insert(jc)
@@ -67,7 +68,7 @@ class JoinClassStudentActivity : AppCompatActivity() {
             finish()
         }
         rvClass.adapter = rvJoinAdapter
-        rvClass.layoutManager = verLayoutManager
+        rvClass.layoutManager = grid
     }
 
 }

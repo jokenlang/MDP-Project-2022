@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="10dp"
+    android:background="#702196F3"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvNamaClassJoinClassStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="4"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvNamaTeacherJoinClass"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tvNamaClassJoinClassStudent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="TextView" />
+    <Button
+        android:id="@+id/btnJoinClassStudent"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:backgroundTint="#3F51B5"
+        android:foregroundTint="#4CAF50"
+        android:text="Join"
+        android:textSize="6sp" />
 
-        <Button
-            android:id="@+id/btnJoinClassStudent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Join" />
-    </LinearLayout>
 </LinearLayout>
