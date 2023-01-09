@@ -13,4 +13,7 @@
     <color name="module_blue">#80B2FF</color>
     <color name="module_orange">#FFBD80</color>
     <color name="module_red">#FF8080</color>
+    <color name="background">#EEEEEE</color>
+    <color name="primaryButton">#212121</color>
+    <color name="onHoverButton">#323232</color>
 </resources>
