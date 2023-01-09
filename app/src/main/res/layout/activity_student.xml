@@ -7,9 +7,18 @@
     android:orientation="vertical"
     tools:context=".student.activity.StudentActivity">
 
-    <Button
-        android:id="@+id/btnToJoinClass"
+    <FrameLayout
+        android:id="@+id/fragment_container_student"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_student"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To Join Class Activity" />
+        app:menu="@menu/bottom_nav_student" />
+
 </LinearLayout>

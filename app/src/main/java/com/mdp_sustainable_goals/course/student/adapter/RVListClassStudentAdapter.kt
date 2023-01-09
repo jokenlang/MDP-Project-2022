@@ -5,23 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
-import com.mdp_sustainable_goals.course.local_storage.entity.QuizEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RVJoinClassStudent(
+class RVListClassStudentAdapter(
     private val listClass: List<ClassEntity>,
     private val layout: Int,
     private val context: Context?,
     private val db : AppDatabase,
+    private val isJoined : Boolean,
     private val onItemClickListener: (id: Int) -> Unit,
-) : RecyclerView.Adapter<RVJoinClassStudent.CustomViewHolder>() {
+) : RecyclerView.Adapter<RVListClassStudentAdapter.CustomViewHolder>() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         var itemView = LayoutInflater.from(parent.context)
@@ -35,7 +37,8 @@ class RVJoinClassStudent(
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val item = listClass[position]
         holder.tvNama.text = item.class_nama
-        holder.btnJoin.setOnClickListener {
+        holder.btnJoin.isVisible = false
+        holder.layout.setOnClickListener {
             onItemClickListener(item.class_id!!)
         }
         coroutine.launch {
@@ -49,8 +52,10 @@ class RVJoinClassStudent(
     }
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val layout : LinearLayout = itemView.findViewById(R.id.layoutJoinClass)
         val tvNama: TextView = itemView.findViewById(R.id.tvNamaClassJoinClassStudent)
         val btnJoin: Button = itemView.findViewById(R.id.btnJoinClassStudent)
         val tvTeacher: TextView = itemView.findViewById(R.id.tvNamaTeacherJoinClass)
     }
+
 }

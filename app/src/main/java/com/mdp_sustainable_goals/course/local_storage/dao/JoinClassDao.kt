@@ -14,7 +14,9 @@ interface JoinClassDao {
 
     @Query("select * from join_class where class_id = :class_id")
     fun getByClass(class_id: String): List<JoinClassEntity>
+
     @Query("select * from join_class where user_username = :username")
     fun getByUsername(username: String): List<JoinClassEntity>
+
 
 }
