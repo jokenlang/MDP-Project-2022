@@ -56,13 +56,15 @@ class StudentListClassFragment (
         setRV()
     }
     suspend fun refreshClass() {
-        listJoinClass.clear()
-        listJoinClass.addAll(db.joinClassDao().getByUsername(username).toMutableList())
-        for(i in 0 until listJoinClass.size) {
-            var class_id = listJoinClass[i].class_id
-            var class_temp = db.classDao().get(class_id)!!
-            listClass.add(class_temp)
-        }
+//        listJoinClass.clear()
+//        listJoinClass.addAll(db.joinClassDao().getByUsername(username).toMutableList())
+//        for(i in 0 until listJoinClass.size) {
+//            var class_id = listJoinClass[i].class_id
+//            var class_temp = db.classDao().get(class_id)!!
+//            listClass.add(class_temp)
+//        }
+        listClass.clear()
+        listClass.addAll(db.classDao().getAllJoined(username))
     }
 
     fun setRV() {

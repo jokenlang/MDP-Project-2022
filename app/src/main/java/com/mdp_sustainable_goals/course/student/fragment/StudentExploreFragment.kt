@@ -60,17 +60,20 @@ class StudentExploreFragment (
         setRV()
     }
     suspend fun refreshClass() {
+//        listAllClass.clear()
+//        listAllClass.addAll(db.classDao().fetch().toMutableList())
+//        listJoinClass.clear()
+//        listJoinClass.addAll(db.joinClassDao().getByUsername(username).toMutableList())
+//        //cari yang sama dihapus dari list class
+//        for(i in 0 until listJoinClass.size) {
+//            var temp_class = listClass.find {
+//                it.class_id == listJoinClass[i].class_id
+//            }
+//            listAllClass.remove(temp_class)
+//        }
         listAllClass.clear()
-        listAllClass.addAll(db.classDao().fetch().toMutableList())
-        listJoinClass.clear()
-        listJoinClass.addAll(db.joinClassDao().getByUsername(username).toMutableList())
-        //cari yang sama dihapus dari list class
-        for(i in 0 until listJoinClass.size) {
-            var temp_class = listClass.find {
-                it.class_id == listJoinClass[i].class_id
-            }
-            listAllClass.remove(temp_class)
-        }
+        listAllClass.addAll(db.classDao().getAllNotJoined(username))
+
 
     }
 
