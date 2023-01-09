@@ -25,6 +25,7 @@ class JoinClassStudentActivity : AppCompatActivity() {
     lateinit var rvClass : RecyclerView
 
     lateinit var listClass : MutableList<ClassEntity>
+    lateinit var listClassTemp : MutableList<ClassEntity>
     lateinit var listJoinClass : MutableList<JoinClassEntity>
     private val coroutine = CoroutineScope(Dispatchers.IO)
     private lateinit var db: AppDatabase
@@ -35,6 +36,7 @@ class JoinClassStudentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_join_class_student)
         db = AppDatabase.build(this)
         listClass = mutableListOf()
+        listClassTemp = mutableListOf()
         listJoinClass = mutableListOf()
         rvClass = findViewById(R.id.rvJoinClassStudent)
 
@@ -59,8 +61,9 @@ class JoinClassStudentActivity : AppCompatActivity() {
     }
 
     fun setRV() {
+        listClassTemp = listClass
         val grid = GridLayoutManager(this,2)
-        rvJoinAdapter = RVJoinClassStudent(listClass, R.layout.list_class_join_student, this,db) { id ->
+        rvJoinAdapter = RVJoinClassStudent(listClassTemp, R.layout.list_class_join_student, this,db) { id ->
             coroutine.launch {
                 var jc = JoinClassEntity(null,username,id)
                 db.joinClassDao().insert(jc)
