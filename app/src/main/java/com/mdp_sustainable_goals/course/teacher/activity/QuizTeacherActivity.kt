@@ -4,12 +4,14 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
@@ -38,9 +40,13 @@ class QuizTeacherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_teacher)
-        listQuiz = mutableListOf()
+
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar.title = "Daftar Quiz"
 
         db = AppDatabase.build(this)
+        listQuiz = mutableListOf()
         idxModule = intent.getStringExtra("idxModule")!!.toInt()
 //        Toast.makeText(this, "$idxModule", Toast.LENGTH_SHORT).show()
         btnAdd = findViewById(R.id.btnAddQuizTeacher)
@@ -53,12 +59,11 @@ class QuizTeacherActivity : AppCompatActivity() {
             tvModule.text = module.module_nama
             refreshQuiz()
 
-            if (module.module_status == 1){
+            if (module.module_status == 1) {
                 btnChangeStatusModule.setBackgroundColor(Color.RED)
                 btnChangeStatusModule.setTextColor(Color.WHITE)
                 btnChangeStatusModule.setText("Disable")
-            }
-            else{
+            } else {
                 btnChangeStatusModule.setBackgroundColor(Color.GREEN)
                 btnChangeStatusModule.setTextColor(Color.BLACK)
                 btnChangeStatusModule.setText("Enable")
@@ -83,29 +88,23 @@ class QuizTeacherActivity : AppCompatActivity() {
             intent.putExtra("mode", "add")
             addLauncher.launch(intent)
         }
-
         btnChangeStatusModule.setOnClickListener {
-            if (module.module_status == 0){
+            if (module.module_status == 0) {
                 module.module_status = 1
-            }
-            else{
+            } else {
                 module.module_status = 0
             }
-
             coroutine.launch {
                 db.moduleDao().update(module)
-
-                module =db.moduleDao().get(idxModule)!!
-
+                module = db.moduleDao().get(idxModule)!!
                 this@QuizTeacherActivity?.runOnUiThread {
                     tvModule.text = module.module_nama
 
-                    if (module.module_status == 1){
+                    if (module.module_status == 1) {
                         btnChangeStatusModule.setBackgroundColor(Color.RED)
                         btnChangeStatusModule.setTextColor(Color.WHITE)
                         btnChangeStatusModule.setText("Disable")
-                    }
-                    else{
+                    } else {
                         btnChangeStatusModule.setBackgroundColor(Color.GREEN)
                         btnChangeStatusModule.setTextColor(Color.BLACK)
                         btnChangeStatusModule.setText("Enable")
@@ -143,5 +142,14 @@ class QuizTeacherActivity : AppCompatActivity() {
             }
         rvQuiz.adapter = rvQuizAdapter
         rvQuiz.layoutManager = verLayoutManager
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

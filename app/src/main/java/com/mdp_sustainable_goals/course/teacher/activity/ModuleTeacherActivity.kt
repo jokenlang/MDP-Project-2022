@@ -3,10 +3,12 @@ package com.mdp_sustainable_goals.course.teacher.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +41,10 @@ class ModuleTeacherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_module_teacher)
+
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar.title = "Daftar Module"
 
         idx = intent.getStringExtra("idx")!!
         var id = idx.toInt()
@@ -100,6 +106,15 @@ class ModuleTeacherActivity : AppCompatActivity() {
                 ClassModuleTeacherAdapter.notifyDataSetChanged()
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun resetUI() {

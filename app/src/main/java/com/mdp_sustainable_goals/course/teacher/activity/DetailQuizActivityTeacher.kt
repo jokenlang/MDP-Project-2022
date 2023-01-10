@@ -5,9 +5,11 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.PilihanEntity
@@ -38,6 +40,10 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_quiz_teacher)
 
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar.title = "Detail Quiz"
+
         db = AppDatabase.build(this)
         listQuiz = mutableListOf()
         listPilihan = mutableListOf()
@@ -47,11 +53,12 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
         etPil2 = findViewById(R.id.etPil2DetailQuizTeacher)
         etPil3 = findViewById(R.id.etPil3DetailQuizTeacher)
         btnSave = findViewById(R.id.btnSaveDetailQuizTeacher)
-        var mode = intent.getStringExtra("mode")!!
+        val mode = intent.getStringExtra("mode")!!
 
         coroutine.launch {
             refreshQuiz()
         }
+
         if (mode == "edit") {
             // isi inputan sebelumnya
             idxQuiz = intent.getIntExtra("quiz_id", -1)
@@ -179,5 +186,14 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
         listQuiz.addAll(db.quizDao().fetchByModule(idxModule).toMutableList())
         listPilihan.clear()
         listPilihan.addAll(db.pilihanDao().fetch().toMutableList())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
