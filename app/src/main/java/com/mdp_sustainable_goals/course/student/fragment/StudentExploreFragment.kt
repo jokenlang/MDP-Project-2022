@@ -17,18 +17,19 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class StudentExploreFragment (
-    var username : String
-): Fragment() {
-    lateinit var rvJoinAdapter : RVJoinClassStudentAdapter
-    lateinit var rvClass : RecyclerView
-    lateinit var tvDashboard : TextView
+class StudentExploreFragment(
+    var username: String
+) : Fragment() {
+    lateinit var rvJoinAdapter: RVJoinClassStudentAdapter
+    lateinit var rvClass: RecyclerView
+    lateinit var tvDashboard: TextView
 
-    lateinit var listAllClass : MutableList<ClassEntity>
-    lateinit var listClass : MutableList<ClassEntity>
-    lateinit var listJoinClass : MutableList<JoinClassEntity>
-    private val coroutine = CoroutineScope(Dispatchers.IO)
+    lateinit var listAllClass: MutableList<ClassEntity>
+    lateinit var listClass: MutableList<ClassEntity>
+    lateinit var listJoinClass: MutableList<JoinClassEntity>
+
     private lateinit var db: AppDatabase
+    private val coroutine = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,42 +39,43 @@ class StudentExploreFragment (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_student_explore, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         db = AppDatabase.build(requireContext())
-
         listClass = mutableListOf()
         listAllClass = mutableListOf()
         listJoinClass = mutableListOf()
         rvClass = view.findViewById(R.id.rvJoinClassStudent)
         tvDashboard = view.findViewById(R.id.tvDashboardStudentName)
         coroutine.launch {
-            var user = db.userDao().getUser(username)!!
+            val user = db.userDao().getUser(username)!!
+            refreshClass()
             activity?.runOnUiThread {
                 tvDashboard.text = "Welcome, ${user.username}"
+                setRV()
             }
-            refreshClass()
         }
-        setRV()
     }
-    suspend fun refreshClass() {
+
+    private suspend fun refreshClass() {
         listAllClass.clear()
         listAllClass.addAll(db.classDao().getAllNotJoined(username))
-
-
     }
 
-    fun setRV() {
+    private fun setRV() {
         listClass = listAllClass
-        val grid = GridLayoutManager(requireContext(),2)
-        rvJoinAdapter = RVJoinClassStudentAdapter(listClass, R.layout.list_class_join_student, requireContext(),db) { id ->
+        val grid = GridLayoutManager(requireContext(), 2)
+        rvJoinAdapter = RVJoinClassStudentAdapter(
+            listClass,
+            R.layout.list_class_join_student,
+            requireContext(),
+            db
+        ) { id ->
             coroutine.launch {
-                var jc = JoinClassEntity(null,username,id)
+                var jc = JoinClassEntity(null, username, id)
                 db.joinClassDao().insert(jc)
                 changeFragmentToListClass()
             }
@@ -88,7 +90,5 @@ class StudentExploreFragment (
             .beginTransaction()
             .replace(R.id.fragment_container_student, fragment)
             .commit()
-
-
     }
 }

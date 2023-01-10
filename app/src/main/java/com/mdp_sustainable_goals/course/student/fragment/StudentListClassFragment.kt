@@ -27,8 +27,9 @@ class StudentListClassFragment(
     lateinit var listClass: MutableList<ClassEntity>
     lateinit var listClassTemp: MutableList<ClassEntity>
     lateinit var listJoinClass: MutableList<JoinClassEntity>
-    private val coroutine = CoroutineScope(Dispatchers.IO)
+
     private lateinit var db: AppDatabase
+    private val coroutine = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,16 +51,18 @@ class StudentListClassFragment(
         listClassTemp = mutableListOf()
         coroutine.launch {
             refreshClass()
+            activity?.runOnUiThread {
+                setRV()
+            }
         }
-        setRV()
     }
 
-    suspend fun refreshClass() {
+    private suspend fun refreshClass() {
         listClass.clear()
         listClass.addAll(db.classDao().getAllJoined(username))
     }
 
-    fun setRV() {
+    private fun setRV() {
         val grid = GridLayoutManager(requireContext(), 2)
         rvListClassAdapter = RVListClassStudentAdapter(
             listClass,
