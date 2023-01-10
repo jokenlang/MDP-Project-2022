@@ -53,8 +53,13 @@
             android:theme="@style/Theme.Course_Custom" />
         <activity
             android:name=".teacher.activity.TeacherActivity"
-            android:exported="false" /> <!-- TEACHER -->
+            android:exported="false" />
+        <!-- TEACHER -->
         <!-- STUDENT -->
+        <activity
+            android:name=".student.activity.StudentQuizActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Course_Custom" />
         <activity
             android:name=".student.activity.QuizWarningActivity"
             android:exported="false"
@@ -65,7 +70,8 @@
             android:theme="@style/Theme.Course_Custom" />
         <activity
             android:name=".student.activity.StudentActivity"
-            android:exported="false" /> <!-- STUDENT -->
+            android:exported="false" />
+        <!-- STUDENT -->
         <activity
             android:name=".ClassDetailActivity"
             android:exported="false"
