@@ -75,9 +75,9 @@ class TeacherActivity : AppCompatActivity() {
                         kelas = db.classDao().getByPengajar(user.username) as ArrayList<ClassEntity>
                         ClassDashboardTeacherAdapter =
                             ClassDashboardTeacherAdapter(this@TeacherActivity, kelas) { idx ->
-                                val intent =
-                                    Intent(this@TeacherActivity, ModuleTeacherActivity::class.java)
-                                intent.putExtra("idx", idx.toString())
+                                val intent = Intent(this@TeacherActivity, ClassDetailActivity::class.java)
+                                intent.putExtra("class_id", idx)
+                                intent.putExtra("activity_scope", "teacher")
                                 startActivity(intent)
                             }
                         val teacher_fragment =
