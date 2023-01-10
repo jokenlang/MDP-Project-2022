@@ -4,28 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15sp"
+    android:layout_margin="24dp"
     android:orientation="vertical"
-    tools:context=".teacher.fragment.ClassTeacherFragment" >
+    tools:context=".teacher.fragment.ClassTeacherFragment">
 
     <TextView
-        android:id="@+id/tvNamaModule"
+        android:id="@+id/tvAddModuleTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nama Module :"
-        android:textSize="24sp" />
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/bottom_border"
+        android:paddingBottom="8dp"
+        android:text="Add New Module"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/etNamaModule"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNamaModule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Module"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etNamaModule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tvDeskripsiModule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi Module"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etDeskripsiModule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnNextModule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create"
-        app:cornerRadius="15sp" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:text="Tambah Module"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:cornerRadius="12dp" />
 </LinearLayout>

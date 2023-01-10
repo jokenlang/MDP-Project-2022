@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clListModule"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:background="@drawable/rounded_corner">
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/rounded_corner"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvListModuleName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:background="@drawable/bottom_border"
+        android:backgroundTint="#757575"
+        android:maxLines="2"
+        android:paddingBottom="8dp"
+        android:text="Module Quiz"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.307" />
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvListModuleDeskripsi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bottom_border"
+        android:backgroundTint="#757575"
+        android:maxLines="3"
+        android:paddingBottom="8dp"
+        android:scrollbars="vertical"
+        android:text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus distinctio, magnam, fuga harum maiores delectus incidunt consequuntur itaque sunt odio beatae necessitatibus perspiciatis omnis deleniti culpa aliquam quis. Adipisci at omnis fugit sit, eveniet accusantium repudiandae modi sunt sapiente dolor inventore saepe nobis libero, obcaecati quidem temporibus quae perspiciatis vero incidunt, mollitia facilis voluptate rerum voluptas? Animi ut a reprehenderit cumque laudantium explicabo quod fugiat quos quidem perferendis eius quasi porro, ratione, repudiandae totam architecto aliquam eligendi ex temporibus veniam vero rem autem molestias quia. Voluptatum ab suscipit totam recusandae tempore natus magnam distinctio repellat quaerat, fuga rem laboriosam error beatae expedita tenetur rerum incidunt dolorum saepe voluptatibus iure reiciendis amet. Fugit eligendi cum quis maiores animi aperiam aliquam quod voluptatem distinctio recusandae. Temporibus, quis. Sint nam facere consectetur esse vel vero possimus accusamus ullam minus, illo cupiditate harum nemo doloribus obcaecati sapiente praesentium cum ratione earum laborum incidunt totam beatae quo. Veniam tempore eius velit, dolorem illo consequuntur debitis laborum totam. Quis illum assumenda veritatis adipisci. Earum accusamus nobis optio amet maxime id distinctio, omnis quos facere delectus assumenda illum pariatur dolor at, eum eveniet! Laborum illo culpa quidem magni dolorum nemo accusantium corporis distinctio, mollitia rem? Dolorum, expedita." />
 
     <TextView
         android:id="@+id/tvJumlahKumpulModule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-        android:text="Jumlah sudah kumpul : 0/20"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvListModuleName" />
+        android:layout_marginTop="8dp"
+        android:text="Jumlah Terkumpul: 0/20" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
