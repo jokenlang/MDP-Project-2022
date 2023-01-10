@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
@@ -33,9 +34,6 @@ class StudentActivity : AppCompatActivity() {
         db = AppDatabase.build(this)
         listClass = mutableListOf()
         bottom_navigation = findViewById(R.id.bottom_navigation_student)
-
-        var fragment = StudentExploreFragment(username)
-        changeFragment(fragment)
 
         bottom_navigation.setOnItemSelectedListener {
             when (it.itemId) {
@@ -64,6 +62,7 @@ class StudentActivity : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
+        bottom_navigation.selectedItemId = R.id.nav_student_explore
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -83,9 +82,11 @@ class StudentActivity : AppCompatActivity() {
     private fun changeFragment(fragment: Fragment) {
         val bundle = Bundle()
         fragment.arguments = bundle
-        val fragmentManager = supportFragmentManager.beginTransaction()
-        fragmentManager.replace(R.id.fragment_container_student, fragment)
-        fragmentManager.commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_student, fragment)
+            .setReorderingAllowed(true)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .commit()
     }
 
     private fun redirectBack() {
