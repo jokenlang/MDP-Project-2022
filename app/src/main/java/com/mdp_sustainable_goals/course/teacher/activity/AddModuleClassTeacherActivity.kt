@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.dao.ModuleDao
 import com.mdp_sustainable_goals.course.local_storage.entity.ModuleEntity
+import com.mdp_sustainable_goals.course.showCustomToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,6 +47,7 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
 
         btnNextModule.setOnClickListener {
             if (etNamaModule.text.toString() == "") {
+                Toast(this@AddModuleClassTeacherActivity).showCustomToast("Input Error",this@AddModuleClassTeacherActivity,"error")
             } else {
                 val module = ModuleEntity(
                     module_id = null,
@@ -55,6 +58,7 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
                 ioScope.launch {
                     db?.moduleDao()?.insert(module)
                 }
+                Toast(this@AddModuleClassTeacherActivity).showCustomToast("Module berhasil ditambahkan",this@AddModuleClassTeacherActivity,"success")
                 var resultIntent = Intent()
                 resultIntent.putExtra("message", "Success add Module")
                 setResult(Activity.RESULT_OK, resultIntent)
