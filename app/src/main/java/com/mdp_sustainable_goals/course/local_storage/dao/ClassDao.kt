@@ -28,4 +28,7 @@ interface ClassDao {
 
     @Query("select * from class")
     fun getAll(): List<ClassEntity>
+
+    @Query("select * from class where user_username = :user_username")
+    fun getByPengajar(user_username: String): List<ClassEntity>
 }

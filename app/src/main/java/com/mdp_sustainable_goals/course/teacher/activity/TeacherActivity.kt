@@ -42,7 +42,7 @@ class TeacherActivity : AppCompatActivity() {
 
         ioScope.launch {
             user = username?.let { db.userDao().getUser(it) } as UserEntity
-            kelas = db.classDao().getAll() as ArrayList<ClassEntity>
+            kelas = db.classDao().getByPengajar(user.username) as ArrayList<ClassEntity>
             ClassDashboardTeacherAdapter =
                 ClassDashboardTeacherAdapter(this@TeacherActivity, kelas) { idx ->
                     val intent = Intent(this@TeacherActivity, ModuleTeacherActivity::class.java)
@@ -62,7 +62,8 @@ class TeacherActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.nav_teacher_dashboard -> {
                     ioScope.launch {
-                        kelas = db.classDao().getAll() as ArrayList<ClassEntity>
+                        user = username?.let { db.userDao().getUser(it) } as UserEntity
+                        kelas = db.classDao().getByPengajar(user.username) as ArrayList<ClassEntity>
                         ClassDashboardTeacherAdapter =
                             ClassDashboardTeacherAdapter(this@TeacherActivity, kelas) { idx ->
                                 val intent =

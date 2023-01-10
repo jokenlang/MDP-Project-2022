@@ -7,6 +7,16 @@
     android:orientation="vertical"
     tools:context=".teacher.activity.ListStudentActivity">
 
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="List Student"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListStudentClassTeacher"
         android:layout_width="match_parent"
