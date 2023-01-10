@@ -59,18 +59,15 @@ class RegisterActivity : AppCompatActivity() {
         rbStudent.setOnClickListener {
             Role = "student"
         }
-
         rbTeacher.setOnClickListener {
             Role = "teacher"
         }
-
         btnToLogin.setOnClickListener {
             finish()
         }
 
         btnRegister.setOnClickListener {
             if (inPassRegis.text.toString() != inConfPassRegis.text.toString()) {
-//                Toast.makeText(this@RegisterActivity, "Password & Konfirmasi Password tidak sama", Toast.LENGTH_SHORT).show()
                 Toast(this@RegisterActivity).showCustomToast(
                     "Password tidak sama",
                     this@RegisterActivity,
@@ -78,16 +75,12 @@ class RegisterActivity : AppCompatActivity() {
                 );
             } else {
                 if (checkEmail(inEmailRegis.text.toString()) == false) {
-//                    Toast.makeText(this@RegisterActivity, "Email tidak valid", Toast.LENGTH_SHORT).show()
                     Toast(this@RegisterActivity).showCustomToast(
                         "Email tidak valid",
                         this@RegisterActivity,
                         "error"
                     );
-                }
-//                Log.d("test = ", checkEmail(inEmailRegis.text.toString()).toString())
-                else if (inNamaRegis.text.toString() == "" || inUsernameRegis.text.toString() == "" || inPassRegis.text.toString() == "" || Role == "") {
-//                    Toast.makeText(this@RegisterActivity, "input error", Toast.LENGTH_SHORT).show()
+                } else if (inNamaRegis.text.toString() == "" || inUsernameRegis.text.toString() == "" || inPassRegis.text.toString() == "" || Role == "") {
                     Toast(this@RegisterActivity).showCustomToast(
                         "Input Error",
                         this@RegisterActivity,
@@ -97,13 +90,12 @@ class RegisterActivity : AppCompatActivity() {
                     var checkUser = false
                     for (i in 0 until username.size) {
                         if (inUsernameRegis.text.toString() == username[i].toString()) {
-                            //ketemu kembar
+                            // ketemu kembar
                             checkUser = true
                             break
                         }
                     }
                     if (checkUser == true) {
-//                        Toast.makeText(this@RegisterActivity, "Username telah terdaftar", Toast.LENGTH_SHORT).show()
                         Toast(this@RegisterActivity).showCustomToast(
                             "Username telah terdaftar",
                             this@RegisterActivity,
@@ -126,13 +118,13 @@ class RegisterActivity : AppCompatActivity() {
                         ioScope.launch {
                             db.userDao().insert(user)
                         }
-//                        Toast.makeText(this@RegisterActivity, "Berhasil mendaftarkan user ke database", Toast.LENGTH_SHORT).show()
                         Toast(this@RegisterActivity).showCustomToast(
                             "Berhasil mendaftarkan user",
                             this@RegisterActivity,
                             "success"
                         );
                         clearInput()
+                        finish()
                     }
                 }
             }
