@@ -2,6 +2,7 @@ package com.mdp_sustainable_goals.course
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
@@ -14,6 +15,7 @@ import com.mdp_sustainable_goals.course.teacher.activity.ModuleTeacherActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 class ClassDetailActivity : AppCompatActivity() {
     private lateinit var tvCDSClass: TextView
@@ -51,6 +53,7 @@ class ClassDetailActivity : AppCompatActivity() {
                 tvCDSClass.text = classObj.class_nama
                 tvCDSBidang.text = classObj.class_bidang_studi
                 // tvCDSDeskripsi.text = classObj.class_deskripsi
+                tvCDSDeskripsi.movementMethod = ScrollingMovementMethod()
             }
         }
 
