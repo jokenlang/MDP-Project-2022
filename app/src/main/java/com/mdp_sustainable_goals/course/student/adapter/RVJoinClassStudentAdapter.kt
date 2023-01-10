@@ -24,7 +24,7 @@ class RVJoinClassStudentAdapter(
 ) : RecyclerView.Adapter<RVJoinClassStudentAdapter.CustomViewHolder>() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        var itemView = LayoutInflater.from(parent.context)
+        val itemView = LayoutInflater.from(parent.context)
         return CustomViewHolder(
             itemView.inflate(
                 layout, parent, false

@@ -8,13 +8,6 @@
     tools:context=".student.fragment.StudentExploreFragment">
 
     <TextView
-        android:id="@+id/tvDashboardStudentName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="TextView" />
-
-    <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

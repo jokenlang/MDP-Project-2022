@@ -1,11 +1,10 @@
 package com.mdp_sustainable_goals.course.student.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
@@ -22,7 +21,6 @@ class StudentExploreFragment(
 ) : Fragment() {
     lateinit var rvJoinAdapter: RVJoinClassStudentAdapter
     lateinit var rvClass: RecyclerView
-    lateinit var tvDashboard: TextView
 
     lateinit var listAllClass: MutableList<ClassEntity>
     lateinit var listClass: MutableList<ClassEntity>
@@ -49,12 +47,9 @@ class StudentExploreFragment(
         listAllClass = mutableListOf()
         listJoinClass = mutableListOf()
         rvClass = view.findViewById(R.id.rvJoinClassStudent)
-        tvDashboard = view.findViewById(R.id.tvDashboardStudentName)
         coroutine.launch {
-            val user = db.userDao().getUser(username)!!
             refreshClass()
             activity?.runOnUiThread {
-                tvDashboard.text = "Welcome, ${user.username}"
                 setRV()
             }
         }
