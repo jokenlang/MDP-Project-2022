@@ -48,7 +48,7 @@ class TeacherDashboardFragment(
 
         var user_name = arguments?.getString("user_name")
         var tvDashboardTeacherName: TextView = view.findViewById(R.id.tvDashboardTeacherName)
-        tvDashboardTeacherName.setText("Welcome, $user_name")
+        tvDashboardTeacherName.setText(" $user_name")
         val verticalLayoutManager =
             GridLayoutManager(context, 3)
         rvDashboardTeacher.layoutManager = verticalLayoutManager
