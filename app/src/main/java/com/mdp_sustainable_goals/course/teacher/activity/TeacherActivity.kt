@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mdp_sustainable_goals.course.R
@@ -39,7 +40,8 @@ class TeacherActivity : AppCompatActivity() {
 //        var index = intent.getIntExtra("indexa",0)rDao().getAll()
         var username = intent.getStringExtra("username")
         bottom_navigation = findViewById(R.id.bottom_navigation)
-
+        var tvDashboardTeacherName: TextView = findViewById(R.id.tvDashboardTeacherName)
+        tvDashboardTeacherName.setText(" $username")
         ioScope.launch {
             user = username?.let { db.userDao().getUser(it) } as UserEntity
             kelas = db.classDao().getByPengajar(user.username) as ArrayList<ClassEntity>
@@ -51,7 +53,7 @@ class TeacherActivity : AppCompatActivity() {
                 }
             val teacher_fragment = TeacherDashboardFragment(ClassDashboardTeacherAdapter)
             val bundle = Bundle()
-            bundle.putString("user_name", user.name)
+            /*bundle.putString("user_name", user.name)*/
             teacher_fragment.arguments = bundle
             val fragmentManager = supportFragmentManager.beginTransaction()
             fragmentManager.replace(R.id.fragment_container, teacher_fragment)
