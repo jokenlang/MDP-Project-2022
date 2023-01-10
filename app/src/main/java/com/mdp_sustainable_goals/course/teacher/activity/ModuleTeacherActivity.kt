@@ -111,11 +111,10 @@ class ModuleTeacherActivity : AppCompatActivity() {
         ioScope.launch {
             modules.clear()
             modules.addAll(db.moduleDao().getModulesByClass(idx.toInt()))
-
             kelas = db.classDao().get(idx.toInt())!!
-            tvClassNameDetailTeacher.setText("Class : ${kelas.class_nama}")
-            tvClassBidangDetailTeacher.setText("Bidang : ${kelas.class_bidang_studi}")
-            this@ModuleTeacherActivity?.runOnUiThread {
+            this@ModuleTeacherActivity.runOnUiThread {
+                tvClassNameDetailTeacher.setText("Class : ${kelas.class_nama}")
+                tvClassBidangDetailTeacher.setText("Bidang : ${kelas.class_bidang_studi}")
                 ClassModuleTeacherAdapter.notifyDataSetChanged()
             }
         }
