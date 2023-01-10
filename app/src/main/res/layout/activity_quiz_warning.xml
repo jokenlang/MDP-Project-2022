@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".student.activity.QuizWarningActivity">
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bottom_border"
+        android:paddingBottom="8dp"
+        android:text="Warning"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|top"
+        android:padding="12dp"
+        android:text="Before you start this quiz, please keep in mind that you are able to work on this quiz only once and you will instantly get the grade once you're finished. Be careful when working with the questions because you can't go back to the previous answer once you proceed to next question!"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvTotalQuestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="Questions in Total: 20"
+        android:textSize="24sp"
+        android:textStyle="normal|bold"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_weight="1"
+        android:gravity="bottom|center_horizontal"
+        android:padding="12dp"
+        android:text="Are you sure you want to start this quiz right now?"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btnStartQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:text="Start Quiz"
+        android:textStyle="bold"
+        app:cornerRadius="12dp" />
+</LinearLayout>

@@ -60,8 +60,8 @@ class ModuleStudentActivity : AppCompatActivity() {
                 classModuleStudentAdapter =
                     ClassModuleStudentAdapter(this@ModuleStudentActivity, modules) { idxModule ->
                         val intent =
-                            Intent(this@ModuleStudentActivity, QuizTeacherActivity::class.java)
-                        intent.putExtra("idxModule", idxModule.toString())
+                            Intent(this@ModuleStudentActivity, QuizWarningActivity::class.java)
+                        intent.putExtra("idxModule", idxModule)
                         startActivity(intent)
                     }
                 rvModulesStudent.adapter = classModuleStudentAdapter
@@ -88,7 +88,7 @@ class ModuleStudentActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
             }
@@ -99,7 +99,7 @@ class ModuleStudentActivity : AppCompatActivity() {
     private fun resetUI() {
         ioScope.launch {
             modules.clear()
-            modules.addAll(db.moduleDao().getModulesByClass(idx.toInt()))
+            modules.addAll(db.moduleDao().getModulesActiveModule(idx.toInt()))
             kelas = db.classDao().get(idx.toInt())!!
             this@ModuleStudentActivity.runOnUiThread {
                 globalFragment = ClassCardInfoFragment(kelas)

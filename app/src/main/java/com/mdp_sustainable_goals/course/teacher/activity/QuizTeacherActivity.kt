@@ -58,7 +58,6 @@ class QuizTeacherActivity : AppCompatActivity() {
             module = db.moduleDao().get(idxModule)!!
             tvModule.text = module.module_nama
             refreshQuiz()
-
             if (module.module_status == 1) {
                 btnChangeStatusModule.setBackgroundColor(Color.RED)
                 btnChangeStatusModule.setTextColor(Color.WHITE)
@@ -83,7 +82,7 @@ class QuizTeacherActivity : AppCompatActivity() {
         setRV()
 
         btnAdd.setOnClickListener {
-            var intent = Intent(this, DetailQuizActivityTeacher::class.java)
+            val intent = Intent(this, DetailQuizActivityTeacher::class.java)
             intent.putExtra("module_id", idxModule)
             intent.putExtra("mode", "add")
             addLauncher.launch(intent)
@@ -99,7 +98,6 @@ class QuizTeacherActivity : AppCompatActivity() {
                 module = db.moduleDao().get(idxModule)!!
                 this@QuizTeacherActivity?.runOnUiThread {
                     tvModule.text = module.module_nama
-
                     if (module.module_status == 1) {
                         btnChangeStatusModule.setBackgroundColor(Color.RED)
                         btnChangeStatusModule.setTextColor(Color.WHITE)
@@ -125,13 +123,13 @@ class QuizTeacherActivity : AppCompatActivity() {
         rvQuizAdapter =
             RVQuizTeacherAdapter(listQuiz, R.layout.quiz_list_teacher, this) { id, mode ->
                 if (mode == "edit") {
-                    var intent = Intent(this, DetailQuizActivityTeacher::class.java)
+                    val intent = Intent(this, DetailQuizActivityTeacher::class.java)
                     intent.putExtra("quiz_id", id)
                     intent.putExtra("mode", "edit")
                     addLauncher.launch(intent)
                 } else if (mode == "delete") {
                     coroutine.launch {
-                        var temp = db.quizDao().get(id)!!
+                        val temp = db.quizDao().get(id)!!
                         temp.quiz_status = 0
                         db.quizDao().update(temp)
                         refreshQuiz()

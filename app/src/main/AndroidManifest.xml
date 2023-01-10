@@ -53,17 +53,19 @@
             android:theme="@style/Theme.Course_Custom" />
         <activity
             android:name=".teacher.activity.TeacherActivity"
-            android:exported="false" />
-        <!-- TEACHER -->
+            android:exported="false" /> <!-- TEACHER -->
         <!-- STUDENT -->
+        <activity
+            android:name=".student.activity.QuizWarningActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Course_Custom" />
         <activity
             android:name=".student.activity.ModuleStudentActivity"
             android:exported="false"
             android:theme="@style/Theme.Course_Custom" />
         <activity
             android:name=".student.activity.StudentActivity"
-            android:exported="false" />
-        <!-- STUDENT -->
+            android:exported="false" /> <!-- STUDENT -->
         <activity
             android:name=".ClassDetailActivity"
             android:exported="false"
@@ -83,6 +85,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -91,4 +94,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>
