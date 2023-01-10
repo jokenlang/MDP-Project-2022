@@ -41,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
                 .build()
 
         coroutine.launch {
+            // db.userDao().nukeTable()
             if (db.userDao().getAll() == null) {
             } else {
                 val tempUser = db.userDao().getAll()

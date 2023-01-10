@@ -9,6 +9,9 @@ interface UserDao {
     @Insert
     suspend fun insert(user: UserEntity)
 
+    @Query("DELETE FROM users")
+    suspend fun nukeTable()
+
     @Query("select * from users")
     fun getAll(): List<UserEntity>
 
