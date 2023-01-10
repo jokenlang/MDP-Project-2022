@@ -1,12 +1,12 @@
 package com.mdp_sustainable_goals.course.teacher.fragment
 
 import android.app.Activity
+import android.graphics.Canvas
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +37,6 @@ class TeacherDashboardFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_teacher_dashboard, container, false)
     }
 
@@ -54,12 +53,18 @@ class TeacherDashboardFragment(
             resetUI()
             activity?.runOnUiThread {
                 rvDashboardTeacher.adapter = adapter
-                rvDashboardTeacher.addItemDecoration(
+                rvDashboardTeacher.addItemDecoration(object :
                     DividerItemDecoration(
-                        rvDashboardTeacher.context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
+                        rvDashboardTeacher.context, VERTICAL
+                    ) {
+                    override fun onDraw(
+                        c: Canvas,
+                        parent: RecyclerView,
+                        state: RecyclerView.State
+                    ) {
+                        // super.onDraw(c, parent, state)
+                    }
+                })
                 adapter.notifyDataSetChanged()
             }
         }
