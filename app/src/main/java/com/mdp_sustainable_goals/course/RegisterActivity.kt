@@ -22,8 +22,10 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var rbStudent: RadioButton
     lateinit var rbTeacher: RadioButton
     lateinit var rgRole: RadioGroup
+    lateinit var listUser : MutableList<UserEntity>
 
     val username: ArrayList<String> = ArrayList()
+    val email: ArrayList<String> = ArrayList()
     var Role = ""
     private lateinit var db: AppDatabase
     val ioScope = CoroutineScope(Dispatchers.IO)
@@ -44,12 +46,15 @@ class RegisterActivity : AppCompatActivity() {
         rgRole = findViewById(R.id.rgRole)
 
         db = Room.databaseBuilder(baseContext, AppDatabase::class.java, "a").build()
+        listUser = mutableListOf()
         ioScope.launch {
+            listUser.clear()
+            listUser.addAll(db.userDao().getAll().toMutableList())
             if (db.userDao().getAll() == null) {
             } else {
                 val tempUsername = db.userDao().getAll()
                 username.clear()
-                for (i in 1 until tempUsername.size) {
+                for (i in 0 until tempUsername.size) {
                     username.add(tempUsername[i].username)
                 }
             }
@@ -88,16 +93,23 @@ class RegisterActivity : AppCompatActivity() {
                     );
                 } else {
                     var checkUser = false
-                    for (i in 0 until username.size) {
-                        if (inUsernameRegis.text.toString() == username[i].toString()) {
-                            // ketemu kembar
+//                    for (i in 0 until username.size) {
+//                        if (inUsernameRegis.text.toString() == username[i]) {
+//                            // ketemu kembar
+//                            checkUser = true
+//                            break
+//                        }
+//                    }
+                    for (i in 0 until listUser.size) {
+                        if(inUsernameRegis.text.toString() == listUser[i].username || inEmailRegis.text.toString() == listUser[i].email) {
                             checkUser = true
                             break
                         }
                     }
+
                     if (checkUser == true) {
                         Toast(this@RegisterActivity).showCustomToast(
-                            "Username telah terdaftar",
+                            "Username / Email telah terdaftar",
                             this@RegisterActivity,
                             "error"
                         );
@@ -129,9 +141,11 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
             ioScope.launch {
+                listUser.clear()
+                listUser.addAll(db.userDao().getAll().toMutableList())
                 val tempUsername = db.userDao().getAll()
                 username.clear()
-                for (i in 1 until tempUsername.size) {
+                for (i in 0 until tempUsername.size) {
                     username.add(tempUsername[i].username)
                 }
             }
