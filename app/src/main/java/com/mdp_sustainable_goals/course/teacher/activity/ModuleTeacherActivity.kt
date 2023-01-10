@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
+import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
 import com.mdp_sustainable_goals.course.local_storage.entity.ModuleEntity
 import com.mdp_sustainable_goals.course.teacher.adapter.ClassModuleTeacherAdapter
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +25,8 @@ import kotlinx.coroutines.launch
 class ModuleTeacherActivity : AppCompatActivity() {
     lateinit var idx: String
 
+    private lateinit var tvClassNameDetailTeacher: TextView
+    private lateinit var tvClassBidangDetailTeacher: TextView
     private lateinit var btnAddModulesTeacher: Button
     private lateinit var btnListStudentClassTeacher: Button
     private lateinit var rvModulesTeacher: RecyclerView
@@ -32,6 +36,7 @@ class ModuleTeacherActivity : AppCompatActivity() {
     val ioScope = CoroutineScope(Dispatchers.IO)
 
     var modules: ArrayList<ModuleEntity> = arrayListOf()
+    private lateinit var kelas: ClassEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,8 @@ class ModuleTeacherActivity : AppCompatActivity() {
 
         btnAddModulesTeacher = findViewById(R.id.btnAddModulesTeacher)
         rvModulesTeacher = findViewById(R.id.rvModulesTeacher)
+        tvClassNameDetailTeacher = findViewById(R.id.tvClassNameDetailTeacher)
+        tvClassBidangDetailTeacher = findViewById(R.id.tvClassBidangDetailTeacher)
 
         val toAddModule = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
                 result: ActivityResult ->
@@ -105,6 +112,9 @@ class ModuleTeacherActivity : AppCompatActivity() {
             modules.clear()
             modules.addAll(db.moduleDao().getModulesByClass(idx.toInt()))
 
+            kelas = db.classDao().get(idx.toInt())!!
+            tvClassNameDetailTeacher.setText("Class : ${kelas.class_nama}")
+            tvClassBidangDetailTeacher.setText("Bidang : ${kelas.class_bidang_studi}")
             this@ModuleTeacherActivity?.runOnUiThread {
                 ClassModuleTeacherAdapter.notifyDataSetChanged()
             }

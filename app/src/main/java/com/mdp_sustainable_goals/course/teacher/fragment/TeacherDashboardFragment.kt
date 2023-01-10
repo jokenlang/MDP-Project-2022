@@ -46,7 +46,6 @@ class TeacherDashboardFragment(
 
         rvDashboardTeacher = view.findViewById(R.id.rvDashboardTeacher)
 
-
         val verticalLayoutManager =
             GridLayoutManager(context, 2)
         rvDashboardTeacher.layoutManager = verticalLayoutManager
