@@ -1,5 +1,6 @@
 package com.mdp_sustainable_goals.course.student.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +27,7 @@ class RVListClassStudentAdapter(
 ) : RecyclerView.Adapter<RVListClassStudentAdapter.CustomViewHolder>() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        var itemView = LayoutInflater.from(parent.context)
+        val itemView = LayoutInflater.from(parent.context)
         return CustomViewHolder(
             itemView.inflate(
                 layout, parent, false
@@ -42,8 +43,10 @@ class RVListClassStudentAdapter(
             onItemClickListener(item.class_id!!)
         }
         coroutine.launch {
-            var teacher = db.userDao().getUser(item.user_username)!!
-            holder.tvTeacher.text = teacher.username
+            val teacher = db.userDao().getUser(item.user_username)!!
+            (context as Activity).runOnUiThread {
+                holder.tvTeacher.text = teacher.username
+            }
         }
     }
 

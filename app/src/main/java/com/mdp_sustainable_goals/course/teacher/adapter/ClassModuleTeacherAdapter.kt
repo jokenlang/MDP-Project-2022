@@ -1,15 +1,11 @@
 package com.mdp_sustainable_goals.course.teacher.adapter
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.entity.ModuleEntity
@@ -26,7 +22,7 @@ class ClassModuleTeacherAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        var itemView = LayoutInflater.from(parent.context)
+        val itemView = LayoutInflater.from(parent.context)
         return CustomViewHolder(
             itemView.inflate(
                 R.layout.list_module_class, parent, false

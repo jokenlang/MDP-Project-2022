@@ -1,15 +1,13 @@
 package com.mdp_sustainable_goals.course.teacher.activity
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,20 +50,18 @@ class ModuleTeacherActivity : AppCompatActivity() {
         tvClassNameDetailTeacher = findViewById(R.id.tvClassNameDetailTeacher)
         tvClassBidangDetailTeacher = findViewById(R.id.tvClassBidangDetailTeacher)
 
-        val toAddModule = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-                result: ActivityResult ->
-            if(result.resultCode == RESULT_OK){
-                val data = result.data
-                if(data != null){
-                    resetUI()
+        val toAddModule =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                if (result.resultCode == RESULT_OK) {
+                    val data = result.data
+                    if (data != null) {
+                        resetUI()
+                    }
+                } else if (result.resultCode == Activity.RESULT_CANCELED) {
                 }
             }
-            else if (result.resultCode == Activity.RESULT_CANCELED){
 
-            }
-        }
         btnListStudentClassTeacher = findViewById(R.id.btnListStudentClassTeacher)
-
         btnListStudentClassTeacher.setOnClickListener {
             val intent =
                 Intent(this@ModuleTeacherActivity, ListStudentActivity::class.java)
@@ -86,8 +82,7 @@ class ModuleTeacherActivity : AppCompatActivity() {
 
         ioScope.launch {
             resetUI()
-
-            this@ModuleTeacherActivity?.runOnUiThread {
+            this@ModuleTeacherActivity.runOnUiThread {
                 ClassModuleTeacherAdapter =
                     ClassModuleTeacherAdapter(this@ModuleTeacherActivity, modules) { idxModule ->
                         val intent =

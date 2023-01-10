@@ -51,7 +51,6 @@ class ClassTeacherFragment() : Fragment() {
                         "user"
                     )
                 )
-
                 val Class = ClassEntity(
                     class_id = null,
                     class_nama = etNamaKelas.text.toString(),

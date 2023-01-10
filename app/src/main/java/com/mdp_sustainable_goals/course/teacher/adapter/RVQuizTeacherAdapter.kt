@@ -18,7 +18,7 @@ class RVQuizTeacherAdapter(
     private val onItemClickListener: (id: Int, mode: String) -> Unit,
 ) : RecyclerView.Adapter<RVQuizTeacherAdapter.CustomViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        var itemView = LayoutInflater.from(parent.context)
+        val itemView = LayoutInflater.from(parent.context)
         return CustomViewHolder(
             itemView.inflate(
                 layout, parent, false

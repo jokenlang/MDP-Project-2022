@@ -19,7 +19,7 @@ data class ListStudentClassTeacherAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        var itemView = LayoutInflater.from(parent.context)
+        val itemView = LayoutInflater.from(parent.context)
         return CustomViewHolder(
             itemView.inflate(
                 R.layout.list_student_class_teacher, parent, false
