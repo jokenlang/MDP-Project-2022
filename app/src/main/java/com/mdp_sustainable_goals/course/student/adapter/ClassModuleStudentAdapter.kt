@@ -12,13 +12,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
+import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.ModuleEntity
+import com.mdp_sustainable_goals.course.local_storage.entity.SubmissionEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ClassModuleStudentAdapter(
     private val context: Activity,
     private val modules: ArrayList<ModuleEntity>,
     val click: (id: Int) -> Unit,
 ) : RecyclerView.Adapter<ClassModuleStudentAdapter.CustomViewHolder>() {
+    lateinit var db: AppDatabase
+    val coroutine = CoroutineScope(Dispatchers.IO)
+    var tempSubmission: SubmissionEntity? = null
+
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val scrollView: ScrollView = itemView.findViewById(R.id.scrollView)
         val tvListModuleName: TextView = itemView.findViewById(R.id.tvListModuleName)
@@ -64,6 +73,19 @@ class ClassModuleStudentAdapter(
         holder.tvJumlahKumpulModule.text = "Jumlah Terkumpul: 0/20"
         holder.itemView.setOnClickListener {
             item.module_id?.let { it1 -> click(it1) }
+        }
+        db = AppDatabase.build(context)
+        coroutine.launch {
+            tempSubmission = db.submissionDao().getByModuleId(item.module_id!!)
+            context.runOnUiThread {
+                if(tempSubmission == null) {
+                    holder.tvDateKumpul.text = "Dikumpul Pada: -"
+                    holder.tvNilaiModule.text = "Nilai Anda: -"
+                } else {
+                    holder.tvDateKumpul.text = "Dikumpul Pada: ${tempSubmission!!.submission_date}"
+                    holder.tvNilaiModule.text = "Nilai Anda: ${tempSubmission!!.submission_score}"
+                }
+            }
         }
     }
 
