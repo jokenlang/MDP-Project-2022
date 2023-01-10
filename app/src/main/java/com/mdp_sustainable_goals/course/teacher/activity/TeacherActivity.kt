@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
@@ -80,9 +81,11 @@ class TeacherActivity : AppCompatActivity() {
                         val bundle = Bundle()
                         bundle.putString("user_name", user.name)
                         teacher_fragment.arguments = bundle
-                        val fragmentManager = supportFragmentManager.beginTransaction()
-                        fragmentManager.replace(R.id.fragment_container, teacher_fragment)
-                        fragmentManager.commit()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, teacher_fragment)
+                            .setReorderingAllowed(true)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .commit()
                     }
                 }
                 R.id.nav_teacher_class -> {
@@ -92,7 +95,10 @@ class TeacherActivity : AppCompatActivity() {
                     bundle.putString("user", username)
                     classFragment.arguments = bundle
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, classFragment).commit()
+                        .replace(R.id.fragment_container, classFragment)
+                        .setReorderingAllowed(true)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit()
                 }
                 R.id.nav_teacher_logout -> {
                     val sharedFile = packageName
