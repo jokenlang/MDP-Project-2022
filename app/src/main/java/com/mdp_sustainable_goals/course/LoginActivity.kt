@@ -196,6 +196,7 @@ class LoginActivity : AppCompatActivity() {
         editor.putString(user_name, userEntity.name)
         editor.putString(user_role, userEntity.role)
         editor.apply()
+        finish()
     }
 
     private fun checkSharedData() {
@@ -229,6 +230,7 @@ class LoginActivity : AppCompatActivity() {
                 intent.putExtra("nama", userNama)
                 startActivity(intent)
             }
+            finish()
         }
     }
 }

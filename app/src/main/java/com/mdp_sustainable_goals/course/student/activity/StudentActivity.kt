@@ -10,6 +10,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
@@ -57,6 +58,8 @@ class StudentActivity : AppCompatActivity() {
                     editor?.remove("user_role")
                     editor?.apply()
                     finish()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 }
             }
             return@setOnItemSelectedListener true

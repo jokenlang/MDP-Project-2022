@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
@@ -40,11 +41,12 @@ class TeacherActivity : AppCompatActivity() {
 
         db = AppDatabase.build(this)
 
-//        var index = intent.getIntExtra("indexa",0)rDao().getAll()
-        var username = intent.getStringExtra("username")
+        // var index = intent.getIntExtra("indexa", 0)
+        val username = intent.getStringExtra("username")
+        val name = intent.getStringExtra("nama")
         bottom_navigation = findViewById(R.id.bottom_navigation)
-        var tvDashboardTeacherName: TextView = findViewById(R.id.tvDashboardTeacherName)
-        tvDashboardTeacherName.setText(" $username")
+        val tvDashboardTeacherName: TextView = findViewById(R.id.tvDashboardTeacherName)
+        tvDashboardTeacherName.text = "$name"
         ioScope.launch {
             user = username?.let { db.userDao().getUser(it) } as UserEntity
             kelas = db.classDao().getByPengajar(user.username) as ArrayList<ClassEntity>
@@ -110,6 +112,8 @@ class TeacherActivity : AppCompatActivity() {
                     editor?.remove("user_role")
                     editor?.apply()
                     finish()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 }
             }
             return@setOnItemSelectedListener true
