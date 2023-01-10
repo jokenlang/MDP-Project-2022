@@ -60,5 +60,4 @@ class RVListClassStudentAdapter(
         val btnJoin: Button = itemView.findViewById(R.id.btnJoinClassStudent)
         val tvTeacher: TextView = itemView.findViewById(R.id.tvNamaTeacherJoinClass)
     }
-
 }

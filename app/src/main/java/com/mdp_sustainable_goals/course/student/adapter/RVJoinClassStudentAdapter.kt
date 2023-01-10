@@ -42,7 +42,7 @@ class RVJoinClassStudentAdapter(
         coroutine.launch {
             val teacher = db.userDao().getUser(item.user_username)!!
             (context as Activity).runOnUiThread {
-                holder.tvTeacher.text = teacher.username
+                holder.tvTeacher.text = teacher.name
             }
         }
     }

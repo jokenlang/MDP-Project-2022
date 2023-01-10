@@ -70,7 +70,7 @@ class StudentExploreFragment(
             db
         ) { id ->
             coroutine.launch {
-                var jc = JoinClassEntity(null, username, id)
+                val jc = JoinClassEntity(null, username, id)
                 db.joinClassDao().insert(jc)
                 changeFragmentToListClass()
             }
