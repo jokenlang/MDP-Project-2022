@@ -17,7 +17,7 @@ interface ClassDao {
     @Query("SELECT * FROM class")
     suspend fun fetch(): List<ClassEntity>
 
-    @Query("SELECT * FROM class c join join_class jc on c.class_id = jc.class_id where jc.user_username = :username")
+    @Query("SELECT * FROM class c where class_id in (SELECT class_id FROM join_class where user_username = :username)")
     suspend fun getAllJoined(username : String): List<ClassEntity>
 
     @Query("SELECT * FROM class c where class_id not in (SELECT class_id FROM join_class where user_username = :username)")
