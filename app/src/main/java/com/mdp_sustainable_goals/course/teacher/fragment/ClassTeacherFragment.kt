@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.room.Room
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.dao.ClassDao
 import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
+import com.mdp_sustainable_goals.course.showCustomToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,6 +47,7 @@ class ClassTeacherFragment() : Fragment() {
 
         btnTambahKelas.setOnClickListener {
             if (etNamaKelas.text.toString() == "" || etBidangStudiKelas.text.toString() == "") {
+                Toast(requireContext()).showCustomToast("Input Error",requireActivity(),"error")
             } else {
                 println(
                     etNamaKelas.text.toString() + "-" + etBidangStudiKelas.text.toString() + "-" + arguments?.getString(
@@ -63,6 +66,7 @@ class ClassTeacherFragment() : Fragment() {
                 }
                 etNamaKelas.setText("")
                 etBidangStudiKelas.setText("")
+                Toast(requireContext()).showCustomToast("Kelas berhasil ditambah",requireActivity(),"success")
             }
         }
     }
