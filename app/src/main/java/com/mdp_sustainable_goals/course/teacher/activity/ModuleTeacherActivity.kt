@@ -2,6 +2,7 @@ package com.mdp_sustainable_goals.course.teacher.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -10,9 +11,11 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mdp_sustainable_goals.course.ClassCardInfoFragment
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
@@ -31,6 +34,8 @@ class ModuleTeacherActivity : AppCompatActivity() {
     private lateinit var btnListStudentClassTeacher: Button
     private lateinit var rvModulesTeacher: RecyclerView
     private lateinit var ClassModuleTeacherAdapter: ClassModuleTeacherAdapter
+    private lateinit var globalFragment: Fragment
+    private val globalBundle: Bundle = Bundle()
 
     lateinit var db: AppDatabase
     val ioScope = CoroutineScope(Dispatchers.IO)
@@ -53,8 +58,6 @@ class ModuleTeacherActivity : AppCompatActivity() {
 
         btnAddModulesTeacher = findViewById(R.id.btnAddModulesTeacher)
         rvModulesTeacher = findViewById(R.id.rvModulesTeacher)
-        tvClassNameDetailTeacher = findViewById(R.id.tvClassNameDetailTeacher)
-        tvClassBidangDetailTeacher = findViewById(R.id.tvClassBidangDetailTeacher)
 
         val toAddModule =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -97,12 +100,18 @@ class ModuleTeacherActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 rvModulesTeacher.adapter = ClassModuleTeacherAdapter
-                rvModulesTeacher.addItemDecoration(
+                rvModulesTeacher.addItemDecoration(object :
                     DividerItemDecoration(
-                        rvModulesTeacher.context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
+                        rvModulesTeacher.context, VERTICAL
+                    ) {
+                    override fun onDraw(
+                        c: Canvas,
+                        parent: RecyclerView,
+                        state: RecyclerView.State
+                    ) {
+                        // super.onDraw(c, parent, state)
+                    }
+                })
                 ClassModuleTeacherAdapter.notifyDataSetChanged()
             }
         }
@@ -123,8 +132,8 @@ class ModuleTeacherActivity : AppCompatActivity() {
             modules.addAll(db.moduleDao().getModulesByClass(idx.toInt()))
             kelas = db.classDao().get(idx.toInt())!!
             this@ModuleTeacherActivity.runOnUiThread {
-                tvClassNameDetailTeacher.setText("Class : ${kelas.class_nama}")
-                tvClassBidangDetailTeacher.setText("Bidang : ${kelas.class_bidang_studi}")
+                globalFragment = ClassCardInfoFragment(kelas)
+                supportFragmentManager.beginTransaction().replace(R.id.classCardInfoView, globalFragment).commit()
                 ClassModuleTeacherAdapter.notifyDataSetChanged()
             }
         }
