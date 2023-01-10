@@ -1,9 +1,11 @@
 package com.mdp_sustainable_goals.course
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
@@ -21,6 +23,9 @@ class ClassDetailActivity : AppCompatActivity() {
     private lateinit var tvCDSClass: TextView
     private lateinit var tvCDSBidang: TextView
     private lateinit var tvCDSDeskripsi: TextView
+    private lateinit var tvCDSNilaiTitle: TextView
+    private lateinit var tvCDSNilai: TextView
+    private lateinit var btnRedirectCertificate: Button
     private lateinit var btnRedirectModule: Button
 
     private var classId: Int = -1
@@ -41,6 +46,9 @@ class ClassDetailActivity : AppCompatActivity() {
         tvCDSClass = findViewById(R.id.tvCDSClass)
         tvCDSBidang = findViewById(R.id.tvCDSBidang)
         tvCDSDeskripsi = findViewById(R.id.tvCDSDeskripsi)
+        tvCDSNilaiTitle = findViewById(R.id.tvCDSNilaiTitle)
+        tvCDSNilai = findViewById(R.id.tvCDSNilai)
+        btnRedirectCertificate = findViewById(R.id.btnRedirectCertificate)
         btnRedirectModule = findViewById(R.id.btnRedirectModule)
 
         classId = intent.getIntExtra("class_id", -1)
@@ -54,6 +62,18 @@ class ClassDetailActivity : AppCompatActivity() {
                 tvCDSBidang.text = classObj.class_bidang_studi
                 // tvCDSDeskripsi.text = classObj.class_deskripsi
                 tvCDSDeskripsi.movementMethod = ScrollingMovementMethod()
+            }
+        }
+
+        if(activityScope == "teacher") {
+            tvCDSNilaiTitle.visibility = View.GONE
+            tvCDSNilai.visibility = View.GONE
+            btnRedirectCertificate.visibility = View.GONE
+        } else {
+            tvCDSNilaiTitle.visibility = View.VISIBLE
+            tvCDSNilai.visibility = View.VISIBLE
+            btnRedirectCertificate.visibility = View.VISIBLE
+            btnRedirectCertificate.setOnClickListener {
             }
         }
 
