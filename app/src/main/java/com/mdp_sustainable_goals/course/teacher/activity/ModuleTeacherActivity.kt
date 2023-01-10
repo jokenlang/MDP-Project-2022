@@ -1,11 +1,13 @@
 package com.mdp_sustainable_goals.course.teacher.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
 class ModuleTeacherActivity : AppCompatActivity() {
     lateinit var idx: String
 
@@ -43,6 +46,7 @@ class ModuleTeacherActivity : AppCompatActivity() {
     var modules: ArrayList<ModuleEntity> = arrayListOf()
     private lateinit var kelas: ClassEntity
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_module_teacher)
@@ -112,13 +116,18 @@ class ModuleTeacherActivity : AppCompatActivity() {
                         // super.onDraw(c, parent, state)
                     }
                 })
+                rvModulesTeacher.setOnTouchListener { v, event ->
+                    findViewById<ScrollView>(R.id.scrollView).getParent()
+                        .requestDisallowInterceptTouchEvent(false)
+                    false
+                }
                 ClassModuleTeacherAdapter.notifyDataSetChanged()
             }
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
             }
@@ -133,7 +142,8 @@ class ModuleTeacherActivity : AppCompatActivity() {
             kelas = db.classDao().get(idx.toInt())!!
             this@ModuleTeacherActivity.runOnUiThread {
                 globalFragment = ClassCardInfoFragment(kelas)
-                supportFragmentManager.beginTransaction().replace(R.id.classCardInfoView, globalFragment).commit()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.classCardInfoView, globalFragment).commit()
                 ClassModuleTeacherAdapter.notifyDataSetChanged()
             }
         }
