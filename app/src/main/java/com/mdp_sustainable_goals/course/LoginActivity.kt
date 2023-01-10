@@ -53,7 +53,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
         btnLogin.setOnClickListener {
             coroutine.run {
                 if (db.userDao().getAll() == null) {
