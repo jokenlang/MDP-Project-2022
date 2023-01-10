@@ -3,12 +3,12 @@ package com.mdp_sustainable_goals.course.local_storage.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "quiz")
-data class QuizEntity(
+@Entity(tableName = "submissions")
+data class SubmissionEntity(
     @PrimaryKey(autoGenerate = true)
-    var quiz_id: Int?,
-    var quiz_nama: String,
-    var quiz_status: Int,
+    var submission_id: Int?,
     var module_id: Int,
-    var pilihan_id: Int?,
+    var class_id: Int,
+    var submission_score: Int,
+    var submission_date: String,
 )

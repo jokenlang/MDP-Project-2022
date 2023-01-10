@@ -18,5 +18,7 @@ class UserEntity(
     @ColumnInfo(name = "user_role")
     var role: String, // student / teacher
     @ColumnInfo(name = "user_saldo")
-    var saldo: Int // student / teacher
+    var saldo: Int, // student / teacher
+    @ColumnInfo(name = "user_seed")
+    var seed: String,
 )

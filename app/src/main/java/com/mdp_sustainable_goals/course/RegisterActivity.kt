@@ -125,7 +125,8 @@ class RegisterActivity : AppCompatActivity() {
                             name = name,
                             password = password,
                             role = Role,
-                            saldo = 0
+                            saldo = 0,
+                            seed = System.currentTimeMillis().toString(),
                         )
                         ioScope.launch {
                             db.userDao().insert(user)
