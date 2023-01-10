@@ -9,4 +9,8 @@
         android:id="@+id/nav_teacher_class"
         android:icon="@drawable/class_teacher"
         android:title="Class" />
+    <item
+        android:id="@+id/nav_teacher_logout"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="Logout" />
 </menu>
