@@ -41,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
                 .build()
 
         coroutine.launch {
+            // db.userDao().nukeTable()
             if (db.userDao().getAll() == null) {
             } else {
                 val tempUser = db.userDao().getAll()
@@ -53,7 +54,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
         btnLogin.setOnClickListener {
             coroutine.run {
                 if (db.userDao().getAll() == null) {
@@ -65,35 +65,32 @@ class LoginActivity : AppCompatActivity() {
             }
             var checkUser = false
             var index = 0
-            var checkInput = checkEmail(inUsernameLogin.text.toString())
-            // Login e kok ndobel logic pengecekan e???
-            if (checkInput == false) {
+            val checkInput = checkEmail(inUsernameLogin.text.toString())
+            if (!checkInput) {
                 for (i in 0 until user.size) {
                     if (inUsernameLogin.text.toString() == user[i].username) {
-                        //ketemu kembar
+                        // ketemu kembar
                         checkUser = true
                         index = i
                         break
                     }
                 }
-                if (checkUser == false) {
-//                    Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
+                if (!checkUser) {
                     Toast(this@LoginActivity).showCustomToast(
-                        "Username Belum Terdaftar",
+                        "Username belum terdaftar",
                         this@LoginActivity,
                         "error"
                     );
                 } else {
                     if (inPasswordLogin.text.toString() != user[index].password) {
-//                        Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
                         Toast(this@LoginActivity).showCustomToast(
                             "Password tidak cocok",
                             this@LoginActivity,
                             "error"
                         );
                     } else {
-                        var username = user[index].username
-                        var nama = user[index].name
+                        val username = user[index].username
+                        val nama = user[index].name
                         if (user[index].role == "teacher") {
                             val intent = Intent(this, TeacherActivity::class.java)
                             intent.putExtra("indexa", index)
@@ -108,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                         Toast(this@LoginActivity).showCustomToast(
-                            "Berhasil Login!",
+                            "Berhasil login!",
                             this@LoginActivity,
                             "success"
                         );
@@ -117,22 +114,20 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 for (i in 0 until user.size) {
                     if (inUsernameLogin.text.toString() == user[i].email) {
-                        //ketemu kembar
+                        // ketemu kembar
                         checkUser = true
                         index = i
                         break
                     }
                 }
                 if (checkUser == false) {
-//                    Toast.makeText(this@LoginActivity, "Username Belum Terdaftar", Toast.LENGTH_SHORT).show()
                     Toast(this@LoginActivity).showCustomToast(
-                        "Username Belum Terdaftar",
+                        "Username belum terdaftar",
                         this@LoginActivity,
                         "error"
                     );
                 } else {
                     if (inPasswordLogin.text.toString() != user[index].password) {
-//                        Toast.makeText(this@LoginActivity, "Password tidak cocok", Toast.LENGTH_SHORT).show()
                         Toast(this@LoginActivity).showCustomToast(
                             "Password tidak cocok",
                             this@LoginActivity,
