@@ -34,8 +34,6 @@ class ClassTeacherFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // cara panggil di fragment
-//        Toast(requireContext()).showCustomToast("Hello",requireActivity(),"success")
         val btnTambahKelas: Button = view.findViewById(R.id.btnTambahKelas)
         val etNamaKelas: EditText = view.findViewById(R.id.etNamaKelas)
         val etBidangStudiKelas: EditText = view.findViewById(R.id.etBidangStudiKelas)
