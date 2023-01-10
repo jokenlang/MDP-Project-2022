@@ -11,7 +11,7 @@
         android:id="@+id/tvTitleRVClassTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24sp"
+        android:layout_margin="24dp"
         android:text="Your Class"
         android:textSize="34sp"
         android:textStyle="bold" />
@@ -19,5 +19,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDashboardTeacher"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp" />
 </LinearLayout>
