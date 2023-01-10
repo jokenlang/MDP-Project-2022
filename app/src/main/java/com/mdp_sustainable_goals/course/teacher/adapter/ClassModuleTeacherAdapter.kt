@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.entity.ModuleEntity
@@ -16,9 +15,9 @@ class ClassModuleTeacherAdapter(
     val click: (id: Int) -> Unit,
 ) : RecyclerView.Adapter<ClassModuleTeacherAdapter.CustomViewHolder>() {
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvModule: TextView = itemView.findViewById(R.id.tvListModuleName)
+        val tvListModuleName: TextView = itemView.findViewById(R.id.tvListModuleName)
+        val tvListModuleDeskripsi: TextView = itemView.findViewById(R.id.tvListModuleDeskripsi)
         val tvJumlahKumpul: TextView = itemView.findViewById(R.id.tvJumlahKumpulModule)
-        val bg: ConstraintLayout = itemView.findViewById(R.id.clListModule)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -32,12 +31,12 @@ class ClassModuleTeacherAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val item = modules[position]
-        holder.tvModule.text = item.module_nama
+        holder.tvListModuleName.text = "Module ${item.module_nama}"
+        holder.tvListModuleDeskripsi.text = item.module_deskripsi
+        holder.tvJumlahKumpul.text = "Jumlah Terkumpul: 0/20"
         holder.itemView.setOnClickListener {
             item.module_id?.let { it1 -> click(it1) }
         }
-        holder.bg.setBackground(context.getResources().getDrawable(R.drawable.rounded_corner))
-        /*holder.bg.setBackgroundColor(context.getResources().getColor(R.color.module_blue))*/
     }
 
     override fun getItemCount(): Int {

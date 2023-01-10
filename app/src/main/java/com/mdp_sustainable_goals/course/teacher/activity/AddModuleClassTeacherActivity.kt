@@ -25,6 +25,7 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
     private lateinit var moduleDao: ModuleDao
 
     private lateinit var etNamaModule: EditText
+    private lateinit var etDeskripsiModule: EditText
     private lateinit var btnNextModule: Button
 
     lateinit var idx: String
@@ -39,6 +40,7 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
         db = AppDatabase.build(this)
 
         etNamaModule = findViewById(R.id.etNamaModule)
+        etDeskripsiModule = findViewById(R.id.etDeskripsiModule)
         btnNextModule = findViewById(R.id.btnNextModule)
 
         val actionBar: ActionBar? = supportActionBar
@@ -46,20 +48,29 @@ class AddModuleClassTeacherActivity : AppCompatActivity() {
         actionBar.title = "Tambah Module"
 
         btnNextModule.setOnClickListener {
-            if (etNamaModule.text.toString() == "") {
-                Toast(this@AddModuleClassTeacherActivity).showCustomToast("Input Error",this@AddModuleClassTeacherActivity,"error")
+            if (etNamaModule.text.toString() == "" || etDeskripsiModule.text.toString() == "") {
+                Toast(this@AddModuleClassTeacherActivity).showCustomToast(
+                    "Input Error",
+                    this@AddModuleClassTeacherActivity,
+                    "error"
+                )
             } else {
                 val module = ModuleEntity(
                     module_id = null,
                     module_nama = etNamaModule.text.toString(),
                     class_id = idx.toString().toInt(),
+                    module_deskripsi = etDeskripsiModule.text.toString(),
                     module_status = 1,
                 )
                 ioScope.launch {
-                    db?.moduleDao()?.insert(module)
+                    db.moduleDao().insert(module)
                 }
-                Toast(this@AddModuleClassTeacherActivity).showCustomToast("Module berhasil ditambahkan",this@AddModuleClassTeacherActivity,"success")
-                var resultIntent = Intent()
+                Toast(this@AddModuleClassTeacherActivity).showCustomToast(
+                    "Module berhasil ditambahkan",
+                    this@AddModuleClassTeacherActivity,
+                    "success"
+                )
+                val resultIntent = Intent()
                 resultIntent.putExtra("message", "Success add Module")
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()

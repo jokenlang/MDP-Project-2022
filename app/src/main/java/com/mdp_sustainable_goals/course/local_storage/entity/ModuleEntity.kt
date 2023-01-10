@@ -9,6 +9,7 @@ data class ModuleEntity(
     var module_id: Int?,
     var module_nama: String,
     var class_id: Int,
+    var module_deskripsi: String,
     var module_status: Int,
 ) {
 }
