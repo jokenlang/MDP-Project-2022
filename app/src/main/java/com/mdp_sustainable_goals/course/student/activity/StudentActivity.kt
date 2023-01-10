@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -31,6 +32,9 @@ class StudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student)
         username = intent.getStringExtra("username")!!
+        val name = intent.getStringExtra("nama")
+        val tvDashboardStudentName: TextView = findViewById(R.id.tvDashboardStudentName)
+        tvDashboardStudentName.text = "$name"
         db = AppDatabase.build(this)
         listClass = mutableListOf()
         bottom_navigation = findViewById(R.id.bottom_navigation_student)

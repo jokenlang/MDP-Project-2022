@@ -22,7 +22,6 @@ class StudentExploreFragment(
 ) : Fragment() {
     lateinit var rvJoinAdapter: RVJoinClassStudentAdapter
     lateinit var rvClass: RecyclerView
-    lateinit var tvDashboard: TextView
 
     lateinit var listAllClass: MutableList<ClassEntity>
     lateinit var listClass: MutableList<ClassEntity>
@@ -49,12 +48,9 @@ class StudentExploreFragment(
         listAllClass = mutableListOf()
         listJoinClass = mutableListOf()
         rvClass = view.findViewById(R.id.rvJoinClassStudent)
-        tvDashboard = view.findViewById(R.id.tvDashboardStudentName)
         coroutine.launch {
-            val user = db.userDao().getUser(username)!!
             refreshClass()
             activity?.runOnUiThread {
-                tvDashboard.text = "Welcome, ${user.username}"
                 setRV()
             }
         }
