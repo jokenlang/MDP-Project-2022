@@ -36,7 +36,7 @@ class ModuleTeacherActivity : AppCompatActivity() {
     private lateinit var btnAddModulesTeacher: Button
     private lateinit var btnListStudentClassTeacher: Button
     private lateinit var rvModulesTeacher: RecyclerView
-    private lateinit var ClassModuleTeacherAdapter: ClassModuleTeacherAdapter
+    private lateinit var classModuleTeacherAdapter: ClassModuleTeacherAdapter
     private lateinit var globalFragment: Fragment
     private val globalBundle: Bundle = Bundle()
 
@@ -96,14 +96,14 @@ class ModuleTeacherActivity : AppCompatActivity() {
         ioScope.launch {
             resetUI()
             this@ModuleTeacherActivity.runOnUiThread {
-                ClassModuleTeacherAdapter =
+                classModuleTeacherAdapter =
                     ClassModuleTeacherAdapter(this@ModuleTeacherActivity, modules) { idxModule ->
                         val intent =
                             Intent(this@ModuleTeacherActivity, QuizTeacherActivity::class.java)
                         intent.putExtra("idxModule", idxModule.toString())
                         startActivity(intent)
                     }
-                rvModulesTeacher.adapter = ClassModuleTeacherAdapter
+                rvModulesTeacher.adapter = classModuleTeacherAdapter
                 rvModulesTeacher.addItemDecoration(object :
                     DividerItemDecoration(
                         rvModulesTeacher.context, VERTICAL
@@ -121,7 +121,7 @@ class ModuleTeacherActivity : AppCompatActivity() {
                         .requestDisallowInterceptTouchEvent(false)
                     false
                 }
-                ClassModuleTeacherAdapter.notifyDataSetChanged()
+                classModuleTeacherAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -144,7 +144,7 @@ class ModuleTeacherActivity : AppCompatActivity() {
                 globalFragment = ClassCardInfoFragment(kelas)
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.classCardInfoView, globalFragment).commit()
-                ClassModuleTeacherAdapter.notifyDataSetChanged()
+                classModuleTeacherAdapter.notifyDataSetChanged()
             }
         }
     }

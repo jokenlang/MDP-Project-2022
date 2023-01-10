@@ -85,6 +85,7 @@ class ClassDetailActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 val intent = Intent(this, ModuleStudentActivity::class.java)
+                intent.putExtra("idx", classId.toString())
                 startActivity(intent)
             }
         }
