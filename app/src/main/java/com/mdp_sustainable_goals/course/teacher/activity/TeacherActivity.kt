@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mdp_sustainable_goals.course.ClassDetailActivity
 import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
@@ -52,13 +53,14 @@ class TeacherActivity : AppCompatActivity() {
             kelas = db.classDao().getByPengajar(user.username) as ArrayList<ClassEntity>
             ClassDashboardTeacherAdapter =
                 ClassDashboardTeacherAdapter(this@TeacherActivity, kelas) { idx ->
-                    val intent = Intent(this@TeacherActivity, ModuleTeacherActivity::class.java)
-                    intent.putExtra("idx", idx.toString())
+                    val intent = Intent(this@TeacherActivity, ClassDetailActivity::class.java)
+                    intent.putExtra("class_id", idx)
+                    intent.putExtra("activity_scope", "teacher")
                     startActivity(intent)
                 }
             val teacher_fragment = TeacherDashboardFragment(ClassDashboardTeacherAdapter)
             val bundle = Bundle()
-            /*bundle.putString("user_name", user.name)*/
+            /* bundle.putString("user_name", user.name) */
             teacher_fragment.arguments = bundle
             val fragmentManager = supportFragmentManager.beginTransaction()
             fragmentManager.replace(R.id.fragment_container, teacher_fragment)

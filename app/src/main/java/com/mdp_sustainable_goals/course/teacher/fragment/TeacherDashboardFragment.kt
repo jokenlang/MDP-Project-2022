@@ -28,7 +28,6 @@ class TeacherDashboardFragment(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         db = AppDatabase.build(context as Activity)
     }
 
