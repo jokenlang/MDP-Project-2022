@@ -1,5 +1,6 @@
 package com.mdp_sustainable_goals.course.student.activity
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,11 +43,20 @@ class QuizWarningActivity : AppCompatActivity() {
         coroutine.launch {
             listQuiz.clear()
             listQuiz.addAll(db.quizDao().fetchByModule(idxModule).toMutableList())
-            tvTotalQuestions.text = "Questions in Total: ${listQuiz.size}"
+            runOnUiThread {
+                if(listQuiz.size > 0) {
+                    tvTotalQuestions.text = "Questions in Total: ${listQuiz.size}"
+                } else {
+                    tvTotalQuestions.text = "Oops, no question for now. Maybe your teacher forgot to put some of it. Get back later!"
+                    btnStartQuiz.isEnabled = false
+                }
+            }
         }
 
-        btnStartQuiz.setOnClickListener {
-            println(idxModule)
+        btnStartQuiz.setOnClickListener {val intent =
+            Intent(this, StudentQuizActivity::class.java)
+            intent.putExtra("idxModule", idxModule)
+            startActivity(intent)
         }
     }
 
