@@ -2,10 +2,7 @@ package com.mdp_sustainable_goals.course
 
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
@@ -24,6 +21,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var btnToLogin: Button
     lateinit var rbStudent: RadioButton
     lateinit var rbTeacher: RadioButton
+    lateinit var rgRole: RadioGroup
 
     val username: ArrayList<String> = ArrayList()
     var Role = ""
@@ -43,6 +41,7 @@ class RegisterActivity : AppCompatActivity() {
         btnToLogin = findViewById(R.id.btnToLogin)
         rbStudent = findViewById(R.id.rbStudent)
         rbTeacher = findViewById(R.id.rbTeacher)
+        rgRole = findViewById(R.id.rgRole)
 
         db = Room.databaseBuilder(baseContext, AppDatabase::class.java, "a").build()
         ioScope.launch {
@@ -63,6 +62,7 @@ class RegisterActivity : AppCompatActivity() {
             Role = "teacher"
         }
         btnToLogin.setOnClickListener {
+            clearAllFields()
             finish()
         }
 
@@ -123,7 +123,7 @@ class RegisterActivity : AppCompatActivity() {
                             this@RegisterActivity,
                             "success"
                         );
-                        clearInput()
+                        clearAllFields()
                         finish()
                     }
                 }
@@ -138,12 +138,13 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    fun clearInput() {
+    private fun clearAllFields() {
         inNamaRegis.setText("")
         inEmailRegis.setText("")
         inUsernameRegis.setText("")
         inPassRegis.setText("")
         inConfPassRegis.setText("")
+        rgRole.clearCheck()
     }
 
     private fun checkEmail(email: String): Boolean {

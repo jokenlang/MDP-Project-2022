@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnToRegister.setOnClickListener {
+            clearAllFields()
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
@@ -104,6 +105,7 @@ class LoginActivity : AppCompatActivity() {
                             intent.putExtra("username", username)
                             startActivity(intent)
                         }
+                        clearAllFields()
                         Toast(this@LoginActivity).showCustomToast(
                             "Berhasil login!",
                             this@LoginActivity,
@@ -147,6 +149,7 @@ class LoginActivity : AppCompatActivity() {
                             intent.putExtra("username", username)
                             startActivity(intent)
                         }
+                        clearAllFields()
                         Toast(this@LoginActivity).showCustomToast(
                             "Berhasil Login!",
                             this@LoginActivity,
@@ -156,6 +159,11 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun clearAllFields() {
+        inUsernameLogin.setText("")
+        inPasswordLogin.setText("")
     }
 
     private fun checkEmail(email: String): Boolean {
