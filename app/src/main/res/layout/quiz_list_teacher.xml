@@ -12,44 +12,42 @@
 
         <TextView
             android:id="@+id/tvNamaListQuizRV"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="TextView"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.017"
+            app:layout_constraintEnd_toStartOf="@+id/btnEditListQuizRV"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/btnEditListQuizRV"
-            android:layout_width="57dp"
+            android:layout_width="56dp"
             android:layout_height="48dp"
-            android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp"
+            android:layout_marginEnd="8dp"
             android:background="@color/black"
             android:src="@drawable/edit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.807"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintBottom_toBottomOf="@+id/btnDeleteListQuizRV"
+            app:layout_constraintEnd_toStartOf="@+id/btnDeleteListQuizRV"
+            app:layout_constraintTop_toTopOf="@+id/btnDeleteListQuizRV" />
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/btnDeleteListQuizRV"
-            android:layout_width="57dp"
+            android:layout_width="56dp"
             android:layout_height="48dp"
-            android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@color/red"
             android:src="@drawable/trash"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnEditListQuizRV"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

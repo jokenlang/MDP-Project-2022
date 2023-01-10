@@ -69,12 +69,18 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
                 if (quiz.pilihan_id == listPilihanTemp[0].pilihan_id) {
                     jawaban = 1
                     etPil1.setBackgroundResource(R.color.module_blue)
+                    etPil2.setBackgroundResource(R.color.module_red)
+                    etPil3.setBackgroundResource(R.color.module_red)
                 } else if (quiz.pilihan_id == listPilihanTemp[1].pilihan_id) {
                     jawaban = 2
                     etPil2.setBackgroundResource(R.color.module_blue)
+                    etPil1.setBackgroundResource(R.color.module_red)
+                    etPil3.setBackgroundResource(R.color.module_red)
                 } else if (quiz.pilihan_id == listPilihanTemp[2].pilihan_id) {
                     jawaban = 3
                     etPil3.setBackgroundResource(R.color.module_blue)
+                    etPil1.setBackgroundResource(R.color.module_red)
+                    etPil2.setBackgroundResource(R.color.module_red)
                 }
                 etSoal.setText(quiz.quiz_nama)
                 etPil1.setText(listPilihanTemp[0].pilihan_nama)
@@ -85,32 +91,33 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
             idxModule = intent.getIntExtra("module_id", -1)
             jawaban = 1
             etPil1.setBackgroundResource(R.color.module_blue)
+            etPil2.setBackgroundResource(R.color.module_red)
+            etPil3.setBackgroundResource(R.color.module_red)
         }
 
         etPil1.setOnClickListener {
             etPil1.setBackgroundResource(R.color.module_blue)
-            etPil2.setBackgroundResource(R.color.background)
-            etPil3.setBackgroundResource(R.color.background)
+            etPil2.setBackgroundResource(R.color.module_red)
+            etPil3.setBackgroundResource(R.color.module_red)
             jawaban = 1
         }
         etPil2.setOnClickListener {
             etPil2.setBackgroundResource(R.color.module_blue)
-            etPil1.setBackgroundResource(R.color.background)
-            etPil3.setBackgroundResource(R.color.background)
+            etPil1.setBackgroundResource(R.color.module_red)
+            etPil3.setBackgroundResource(R.color.module_red)
             jawaban = 2
         }
         etPil3.setOnClickListener {
             etPil3.setBackgroundResource(R.color.module_blue)
-            etPil2.setBackgroundResource(R.color.background)
-            etPil1.setBackgroundResource(R.color.background)
+            etPil2.setBackgroundResource(R.color.module_red)
+            etPil1.setBackgroundResource(R.color.module_red)
             jawaban = 3
         }
 
         btnSave.setOnClickListener {
             if (etSoal.text.isEmpty() || etPil1.text.isEmpty() || etPil2.text.isEmpty() || etPil3.text.isEmpty()) {
                 Toast(this).showCustomToast("Input Error", this, "error")
-            }
-            else {
+            } else {
                 if (mode == "add") {
                     coroutine.launch {
                         var quiz = QuizEntity(null, etSoal.text.toString(), 1, idxModule, null)
@@ -151,7 +158,7 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
                             db.quizDao().update(max_quiz)
                         }
                     }
-                        Toast(this).showCustomToast("Berhasil tambah quiz", this, "success")
+                    Toast(this).showCustomToast("Berhasil tambah quiz", this, "success")
 //                    finish()
                 } else if (mode == "edit") {
                     //ganti textnya
@@ -163,7 +170,6 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
                         quiz.pilihan_id = listPilihanTemp[0].pilihan_id
                     } else if (jawaban == 2) {
                         quiz.pilihan_id = listPilihanTemp[1].pilihan_id
-
                     } else if (jawaban == 3) {
                         quiz.pilihan_id = listPilihanTemp[2].pilihan_id
                     }
@@ -179,8 +185,7 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
-            }
-
+        }
     }
 
     suspend fun refreshQuiz() {
