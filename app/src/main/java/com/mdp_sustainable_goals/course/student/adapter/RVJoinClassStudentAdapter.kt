@@ -19,10 +19,11 @@ class RVJoinClassStudentAdapter(
     private val listClass: List<ClassEntity>,
     private val layout: Int,
     private val context: Context?,
-    private val db : AppDatabase,
+    private val db: AppDatabase,
     private val onItemClickListener: (id: Int) -> Unit,
 ) : RecyclerView.Adapter<RVJoinClassStudentAdapter.CustomViewHolder>() {
     private val coroutine = CoroutineScope(Dispatchers.IO)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val itemView = LayoutInflater.from(parent.context)
         return CustomViewHolder(
@@ -56,5 +57,4 @@ class RVJoinClassStudentAdapter(
         val btnJoin: Button = itemView.findViewById(R.id.btnJoinClassStudent)
         val tvTeacher: TextView = itemView.findViewById(R.id.tvNamaTeacherJoinClass)
     }
-
 }

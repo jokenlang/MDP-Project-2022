@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ class StudentListClassFragment(
 ) : Fragment() {
     lateinit var rvListClass: RecyclerView
     lateinit var rvListClassAdapter: RVListClassStudentAdapter
+    lateinit var textView14: TextView
 
     lateinit var listClass: MutableList<ClassEntity>
     lateinit var listClassTemp: MutableList<ClassEntity>
@@ -46,6 +48,7 @@ class StudentListClassFragment(
         super.onViewCreated(view, savedInstanceState)
         db = AppDatabase.build(requireContext())
         rvListClass = view.findViewById(R.id.rvListClassStudent)
+        textView14 = view.findViewById(R.id.textView14)
         listJoinClass = mutableListOf()
         listClass = mutableListOf()
         listClassTemp = mutableListOf()
@@ -63,6 +66,15 @@ class StudentListClassFragment(
     }
 
     private fun setRV() {
+        activity?.runOnUiThread {
+            if(listClass.size > 0) {
+                rvListClass.visibility = View.VISIBLE
+                textView14.visibility = View.GONE
+            } else {
+                rvListClass.visibility = View.GONE
+                textView14.visibility = View.VISIBLE
+            }
+        }
         val grid = GridLayoutManager(requireContext(), 2)
         rvListClassAdapter = RVListClassStudentAdapter(
             listClass,

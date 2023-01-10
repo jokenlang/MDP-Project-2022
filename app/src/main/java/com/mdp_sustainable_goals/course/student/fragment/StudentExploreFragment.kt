@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
@@ -21,6 +23,7 @@ class StudentExploreFragment(
 ) : Fragment() {
     lateinit var rvJoinAdapter: RVJoinClassStudentAdapter
     lateinit var rvClass: RecyclerView
+    lateinit var textView10: TextView
 
     lateinit var listAllClass: MutableList<ClassEntity>
     lateinit var listClass: MutableList<ClassEntity>
@@ -47,6 +50,7 @@ class StudentExploreFragment(
         listAllClass = mutableListOf()
         listJoinClass = mutableListOf()
         rvClass = view.findViewById(R.id.rvJoinClassStudent)
+        textView10 = view.findViewById(R.id.textView10)
         coroutine.launch {
             refreshClass()
             activity?.runOnUiThread {
@@ -62,6 +66,15 @@ class StudentExploreFragment(
 
     private fun setRV() {
         listClass = listAllClass
+        activity?.runOnUiThread {
+            if(listClass.size > 0) {
+                rvClass.visibility = View.VISIBLE
+                textView10.visibility = View.GONE
+            } else {
+                rvClass.visibility = View.GONE
+                textView10.visibility = View.VISIBLE
+            }
+        }
         val grid = GridLayoutManager(requireContext(), 2)
         rvJoinAdapter = RVJoinClassStudentAdapter(
             listClass,
@@ -79,11 +92,12 @@ class StudentExploreFragment(
         rvClass.layoutManager = grid
     }
 
-    fun changeFragmentToListClass() {
+    private fun changeFragmentToListClass() {
         val fragment = StudentListClassFragment(username)
-        parentFragmentManager
-            .beginTransaction()
+        parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_student, fragment)
+            .setReorderingAllowed(true)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
     }
 }
