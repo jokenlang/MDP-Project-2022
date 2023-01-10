@@ -24,17 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Course"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup,android:theme"
+        tools:replace="android:allowBackup,android:theme,android:usesCleartextTraffic"
         tools:targetApi="31">
         <activity
-            android:name=".splash_screen"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".payments.PaymentActivity"
+            android:exported="false" />
         <activity
             android:name=".student.activity.StudentActivity"
             android:exported="false" />
@@ -65,6 +59,15 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+        <activity
+            android:name=".splash_screen"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
