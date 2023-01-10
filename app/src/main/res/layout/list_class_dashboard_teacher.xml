@@ -5,13 +5,13 @@
     android:id="@+id/clListModule"
     android:layout_width="match_parent"
     android:layout_height="150sp"
-    android:layout_margin="4dp"
+    android:layout_margin="20dp"
     android:background="@drawable/rounded_corner_blue">
 
     <TextView
         android:id="@+id/tvListClassDashboard"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
         android:text="TextView"
         android:textAlignment="center"

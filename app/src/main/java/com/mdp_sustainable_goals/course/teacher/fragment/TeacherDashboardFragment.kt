@@ -50,7 +50,7 @@ class TeacherDashboardFragment(
         var tvDashboardTeacherName: TextView = view.findViewById(R.id.tvDashboardTeacherName)
         tvDashboardTeacherName.setText(" $user_name")
         val verticalLayoutManager =
-            GridLayoutManager(context, 3)
+            GridLayoutManager(context, 2)
         rvDashboardTeacher.layoutManager = verticalLayoutManager
 
         ioScope.launch {
