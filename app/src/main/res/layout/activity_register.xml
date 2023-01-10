@@ -10,7 +10,10 @@
         android:layout_width="365dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="30dp"
+        android:paddingStart="28sp"
+        android:paddingTop="36sp"
+        android:paddingEnd="28sp"
+        android:paddingBottom="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -18,10 +21,26 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="2dp"
             android:gravity="center"
-            android:text="Register"
-            android:textSize="34sp" />
+            android:text="Create Account"
+            android:textAlignment="center"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="COURSE"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.433" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +52,7 @@
             android:id="@+id/inUsernameRegis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Username"
             android:inputType="textPersonName" />
@@ -42,6 +61,7 @@
             android:id="@+id/inEmailRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Email"
             android:inputType="textPersonName" />
@@ -50,7 +70,7 @@
             android:id="@+id/inNamaRegis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Name"
             android:inputType="textPersonName" />
@@ -59,7 +79,7 @@
             android:id="@+id/inPassRegisPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
@@ -68,15 +88,25 @@
             android:id="@+id/inConfPassRegis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="Confirmation Password"
             android:inputType="textPassword" />
 
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="2dp"
+            android:text="Choose Your Role:"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rbStudent"
@@ -109,6 +139,6 @@
             android:id="@+id/btnToLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="To Login" />
+            android:text="Login Now" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
