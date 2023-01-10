@@ -10,6 +10,7 @@ class ClassEntity(
     var class_nama: String,
     var user_username: String,
     var class_bidang_studi: String,
+    var class_deskripsi: String,
     var class_status: Int
 ) {
 }

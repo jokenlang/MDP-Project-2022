@@ -60,7 +60,8 @@ class ClassDetailActivity : AppCompatActivity() {
             runOnUiThread {
                 tvCDSClass.text = classObj.class_nama
                 tvCDSBidang.text = classObj.class_bidang_studi
-                // tvCDSDeskripsi.text = classObj.class_deskripsi
+                tvCDSBidang.movementMethod = ScrollingMovementMethod()
+                tvCDSDeskripsi.text = classObj.class_deskripsi
                 tvCDSDeskripsi.movementMethod = ScrollingMovementMethod()
             }
         }
