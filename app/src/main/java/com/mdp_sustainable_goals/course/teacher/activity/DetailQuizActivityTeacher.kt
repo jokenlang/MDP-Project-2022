@@ -61,13 +61,13 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
                 listPilihanTemp.addAll(db.pilihanDao().fetchByQuiz(idxQuiz).toMutableList())
                 if (quiz.pilihan_id == listPilihanTemp[0].pilihan_id) {
                     jawaban = 1
-                    etPil1.setBackgroundResource(R.color.teal_700)
+                    etPil1.setBackgroundResource(R.color.module_blue)
                 } else if (quiz.pilihan_id == listPilihanTemp[1].pilihan_id) {
                     jawaban = 2
-                    etPil2.setBackgroundResource(R.color.teal_700)
+                    etPil2.setBackgroundResource(R.color.module_blue)
                 } else if (quiz.pilihan_id == listPilihanTemp[2].pilihan_id) {
                     jawaban = 3
-                    etPil3.setBackgroundResource(R.color.teal_700)
+                    etPil3.setBackgroundResource(R.color.module_blue)
                 }
                 etSoal.setText(quiz.quiz_nama)
                 etPil1.setText(listPilihanTemp[0].pilihan_nama)
@@ -77,25 +77,25 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
         } else if (mode == "add") {
             idxModule = intent.getIntExtra("module_id", -1)
             jawaban = 1
-            etPil1.setBackgroundResource(R.color.teal_700)
+            etPil1.setBackgroundResource(R.color.module_blue)
         }
 
         etPil1.setOnClickListener {
-            etPil1.setBackgroundResource(R.color.teal_700)
-            etPil2.setBackgroundResource(R.color.white)
-            etPil3.setBackgroundResource(R.color.white)
+            etPil1.setBackgroundResource(R.color.module_blue)
+            etPil2.setBackgroundResource(R.color.background)
+            etPil3.setBackgroundResource(R.color.background)
             jawaban = 1
         }
         etPil2.setOnClickListener {
-            etPil2.setBackgroundResource(R.color.teal_700)
-            etPil1.setBackgroundResource(R.color.white)
-            etPil3.setBackgroundResource(R.color.white)
+            etPil2.setBackgroundResource(R.color.module_blue)
+            etPil1.setBackgroundResource(R.color.background)
+            etPil3.setBackgroundResource(R.color.background)
             jawaban = 2
         }
         etPil3.setOnClickListener {
-            etPil3.setBackgroundResource(R.color.teal_700)
-            etPil2.setBackgroundResource(R.color.white)
-            etPil1.setBackgroundResource(R.color.white)
+            etPil3.setBackgroundResource(R.color.module_blue)
+            etPil2.setBackgroundResource(R.color.background)
+            etPil1.setBackgroundResource(R.color.background)
             jawaban = 3
         }
 
