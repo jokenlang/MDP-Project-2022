@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="15sp"
     android:orientation="vertical"
-    tools:context=".teacher.activity.QuizTeacherActivity" >
+    tools:context=".teacher.activity.QuizTeacherActivity">
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
         android:text="Quiz"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="34sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
             android:text="Nama Module"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -36,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
             android:text="TextView"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -53,13 +57,15 @@
         android:id="@+id/btnAddQuizTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Quiz" />
+        android:text="Add Quiz"
+        app:cornerRadius="15sp" />
 
     <Button
         android:id="@+id/btnChangeStatusModule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/red"
-        android:text="Disable" />
+        android:text="Disable"
+        app:cornerRadius="15sp" />
 
 </LinearLayout>

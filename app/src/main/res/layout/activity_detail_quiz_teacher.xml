@@ -12,9 +12,10 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
         android:text="Quiz"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="34sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,6 +78,7 @@
         android:id="@+id/btnSaveDetailQuizTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:text="Save"
+        app:cornerRadius="15sp" />
 
 </LinearLayout>

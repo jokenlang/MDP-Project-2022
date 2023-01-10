@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.entity.QuizEntity
+import pl.droidsonroids.gif.GifImageView
 
 class RVQuizTeacherAdapter(
     private val listQuiz: List<QuizEntity>,
@@ -42,7 +43,7 @@ class RVQuizTeacherAdapter(
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNama: TextView = itemView.findViewById(R.id.tvNamaListQuizRV)
-        val btnDetail: Button = itemView.findViewById(R.id.btnEditListQuizRV)
-        val btnDelete: Button = itemView.findViewById(R.id.btnDeleteListQuizRV)
+        val btnDetail: GifImageView = itemView.findViewById(R.id.btnEditListQuizRV)
+        val btnDelete: GifImageView = itemView.findViewById(R.id.btnDeleteListQuizRV)
     }
 }
