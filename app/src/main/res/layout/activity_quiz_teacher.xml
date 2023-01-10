@@ -55,4 +55,11 @@
         android:layout_height="wrap_content"
         android:text="Add Quiz" />
 
+    <Button
+        android:id="@+id/btnChangeStatusModule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:text="Disable" />
+
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.mdp_sustainable_goals.course.teacher.activity
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -25,6 +26,7 @@ class QuizTeacherActivity : AppCompatActivity() {
     lateinit var tvModule: TextView
     lateinit var rvQuiz: RecyclerView
     lateinit var btnAdd: Button
+    lateinit var btnChangeStatusModule: Button
     var idxModule: Int = -1
     lateinit var listQuiz: MutableList<QuizEntity>
     var rvQuizAdapter: RVQuizTeacherAdapter? = null
@@ -42,6 +44,7 @@ class QuizTeacherActivity : AppCompatActivity() {
         idxModule = intent.getStringExtra("idxModule")!!.toInt()
 //        Toast.makeText(this, "$idxModule", Toast.LENGTH_SHORT).show()
         btnAdd = findViewById(R.id.btnAddQuizTeacher)
+        btnChangeStatusModule = findViewById(R.id.btnChangeStatusModule)
         rvQuiz = findViewById(R.id.rvQuizTeacher)
         tvModule = findViewById(R.id.tvNamaModuleQuizTeacher)
 
@@ -49,6 +52,17 @@ class QuizTeacherActivity : AppCompatActivity() {
             module = db.moduleDao().get(idxModule)!!
             tvModule.text = module.module_nama
             refreshQuiz()
+
+            if (module.module_status == 1){
+                btnChangeStatusModule.setBackgroundColor(Color.RED)
+                btnChangeStatusModule.setTextColor(Color.WHITE)
+                btnChangeStatusModule.setText("Disable")
+            }
+            else{
+                btnChangeStatusModule.setBackgroundColor(Color.GREEN)
+                btnChangeStatusModule.setTextColor(Color.BLACK)
+                btnChangeStatusModule.setText("Enable")
+            }
         }
 
         addLauncher =
@@ -68,6 +82,37 @@ class QuizTeacherActivity : AppCompatActivity() {
             intent.putExtra("module_id", idxModule)
             intent.putExtra("mode", "add")
             addLauncher.launch(intent)
+        }
+
+        btnChangeStatusModule.setOnClickListener {
+            if (module.module_status == 0){
+                module.module_status = 1
+            }
+            else{
+                module.module_status = 0
+            }
+
+            coroutine.launch {
+                db.moduleDao().update(module)
+
+                module =db.moduleDao().get(idxModule)!!
+
+                this@QuizTeacherActivity?.runOnUiThread {
+                    tvModule.text = module.module_nama
+
+                    if (module.module_status == 1){
+                        btnChangeStatusModule.setBackgroundColor(Color.RED)
+                        btnChangeStatusModule.setTextColor(Color.WHITE)
+                        btnChangeStatusModule.setText("Disable")
+                    }
+                    else{
+                        btnChangeStatusModule.setBackgroundColor(Color.GREEN)
+                        btnChangeStatusModule.setTextColor(Color.BLACK)
+                        btnChangeStatusModule.setText("Enable")
+                    }
+                }
+
+            }
         }
     }
 
