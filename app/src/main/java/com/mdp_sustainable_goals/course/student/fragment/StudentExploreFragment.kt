@@ -54,7 +54,9 @@ class StudentExploreFragment (
         tvDashboard = view.findViewById(R.id.tvDashboardStudentName)
         coroutine.launch {
             var user = db.userDao().getUser(username)!!
-            tvDashboard.text = "Welcome, ${user.username}"
+            activity?.runOnUiThread {
+                tvDashboard.text = "Welcome, ${user.username}"
+            }
             refreshClass()
         }
         setRV()
