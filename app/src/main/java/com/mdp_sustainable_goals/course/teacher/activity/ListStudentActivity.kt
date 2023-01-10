@@ -1,11 +1,15 @@
 package com.mdp_sustainable_goals.course.teacher.activity
 
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
@@ -21,6 +25,7 @@ class ListStudentActivity : AppCompatActivity() {
 
     private lateinit var adapter: ListStudentClassTeacherAdapter
     private lateinit var rvListStudentClassTeacher: RecyclerView
+    private lateinit var tvListStudentEmpty: TextView
 
     var list_student: ArrayList<UserEntity> = arrayListOf()
 
@@ -38,9 +43,10 @@ class ListStudentActivity : AppCompatActivity() {
 
         db = AppDatabase.build(this)
         rvListStudentClassTeacher = findViewById(R.id.rvListStudentClassTeacher)
+        tvListStudentEmpty = findViewById(R.id.tvListStudentEmpty)
 
         val verticalLayoutManager =
-            GridLayoutManager(this, 3)
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvListStudentClassTeacher.layoutManager = verticalLayoutManager
 
         ioScope.launch {
@@ -48,12 +54,18 @@ class ListStudentActivity : AppCompatActivity() {
             this@ListStudentActivity.runOnUiThread {
                 adapter = ListStudentClassTeacherAdapter(this@ListStudentActivity, list_student)
                 rvListStudentClassTeacher.adapter = adapter
-                rvListStudentClassTeacher.addItemDecoration(
+                rvListStudentClassTeacher.addItemDecoration(object :
                     DividerItemDecoration(
-                        rvListStudentClassTeacher.context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
+                        rvListStudentClassTeacher.context, VERTICAL
+                    ) {
+                    override fun onDraw(
+                        c: Canvas,
+                        parent: RecyclerView,
+                        state: RecyclerView.State
+                    ) {
+                        // super.onDraw(c, parent, state)
+                    }
+                })
                 adapter.notifyDataSetChanged()
             }
         }
@@ -64,13 +76,20 @@ class ListStudentActivity : AppCompatActivity() {
             list_student.clear()
             list_student.addAll(db.joinClassDao().getByClass(idx))
             this@ListStudentActivity.runOnUiThread {
+                if (list_student.size > 0) {
+                    rvListStudentClassTeacher.visibility = View.VISIBLE
+                    tvListStudentEmpty.visibility = View.GONE
+                } else {
+                    rvListStudentClassTeacher.visibility = View.GONE
+                    tvListStudentEmpty.visibility = View.VISIBLE
+                }
                 adapter.notifyDataSetChanged()
             }
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
             }

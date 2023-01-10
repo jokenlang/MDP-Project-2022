@@ -15,7 +15,7 @@ data class ListStudentClassTeacherAdapter(
     private val list_student: ArrayList<UserEntity >,
 ) : RecyclerView.Adapter<ListStudentClassTeacherAdapter.CustomViewHolder>() {
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvClass: TextView = itemView.findViewById(R.id.tvNamaMahasiswaClassTeacher)
+        val tvNamaMahasiswaClassTeacher: TextView = itemView.findViewById(R.id.tvNamaMahasiswaClassTeacher)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -29,7 +29,7 @@ data class ListStudentClassTeacherAdapter(
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val item = list_student[position]
-        holder.tvClass.text = item.name
+        holder.tvNamaMahasiswaClassTeacher.text = item.name
     }
 
     override fun getItemCount(): Int {
