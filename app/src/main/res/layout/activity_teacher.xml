@@ -5,18 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".teacher.activity.TeacherActivity" >
+    tools:context=".teacher.activity.TeacherActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="153dp"
+        android:layout_height="156dp"
         android:background="@color/black">
 
         <TextView
             android:id="@+id/tvDashboardTeacherName"
-            android:layout_width="159dp"
-            android:layout_height="33dp"
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="@font/montserrat_medium"
+            android:inputType="text|textMultiLine"
+            android:maxLines="2"
+            android:singleLine="false"
             android:text="Nama Teacher"
             android:textColor="#FFFFFF"
             android:textColorLink="#FFFFFF"
@@ -24,10 +28,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.071"
+            app:layout_constraintHorizontal_bias="0.082"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.7" />
+            app:layout_constraintVertical_bias="0.693" />
 
         <TextView
             android:id="@+id/textView10"
@@ -37,15 +41,15 @@
             android:text="Welcome!"
             android:textColor="#FFFFFF"
             android:textSize="34sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvDashboardTeacherName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.073"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.323" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <pl.droidsonroids.gif.GifImageView
-            android:layout_width="181dp"
+            android:layout_width="178dp"
             android:layout_height="124dp"
             android:src="@drawable/book_hand"
             app:layout_constraintBottom_toBottomOf="parent"
