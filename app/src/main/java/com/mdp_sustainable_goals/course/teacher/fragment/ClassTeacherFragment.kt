@@ -62,21 +62,10 @@ class ClassTeacherFragment() : Fragment() {
                 coroutine.launch {
                     db?.classDao()?.insert(Class)
                 }
+                etNamaKelas.setText("")
+                etBidangStudiKelas.setText("")
             }
         }
     }
 
-    private fun insertClass(namaKelas: String, bidangStudi: String) {
-        var Username = arguments?.getString("user")
-        val Class = ClassEntity(
-            class_id = null,
-            class_nama = namaKelas,
-            user_username = Username.toString(),
-            class_bidang_studi = bidangStudi,
-            class_status = 1,
-        )
-        coroutine.launch {
-            db?.classDao()?.insert(Class)
-        }
-    }
 }
