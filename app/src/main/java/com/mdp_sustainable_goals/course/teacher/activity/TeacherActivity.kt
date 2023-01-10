@@ -1,7 +1,9 @@
 package com.mdp_sustainable_goals.course.teacher.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -73,7 +75,8 @@ class TeacherActivity : AppCompatActivity() {
                                 intent.putExtra("idx", idx.toString())
                                 startActivity(intent)
                             }
-                        val teacher_fragment = TeacherDashboardFragment(ClassDashboardTeacherAdapter)
+                        val teacher_fragment =
+                            TeacherDashboardFragment(ClassDashboardTeacherAdapter)
                         val bundle = Bundle()
                         bundle.putString("user_name", user.name)
                         teacher_fragment.arguments = bundle
@@ -90,6 +93,17 @@ class TeacherActivity : AppCompatActivity() {
                     classFragment.arguments = bundle
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, classFragment).commit()
+                }
+                R.id.nav_teacher_logout -> {
+                    val sharedFile = packageName
+                    val shared: SharedPreferences? = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor? = shared?.edit()
+                    editor?.remove("user_username")
+                    editor?.remove("user_email")
+                    editor?.remove("user_name")
+                    editor?.remove("user_role")
+                    editor?.apply()
+                    finish()
                 }
             }
             return@setOnItemSelectedListener true
