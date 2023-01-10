@@ -8,6 +8,19 @@
     android:layout_margin="20dp"
     android:background="@drawable/rounded_corner_blue">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/tempClass"
+        android:layout_width="70dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="5sp"
+        android:src="@drawable/class1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/tvListClassDashboard"
         android:layout_width="match_parent"
@@ -19,8 +32,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tempClass" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
