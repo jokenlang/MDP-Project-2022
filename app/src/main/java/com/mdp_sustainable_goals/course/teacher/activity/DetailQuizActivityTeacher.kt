@@ -107,10 +107,11 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
         }
 
         btnSave.setOnClickListener {
-            if (mode == "add") {
-                if (etSoal.text.isEmpty() || etPil1.text.isEmpty() || etPil2.text.isEmpty() || etPil3.text.isEmpty()) {
-                    Toast(this).showCustomToast("Input Error", this, "error")
-                } else {
+            if (etSoal.text.isEmpty() || etPil1.text.isEmpty() || etPil2.text.isEmpty() || etPil3.text.isEmpty()) {
+                Toast(this).showCustomToast("Input Error", this, "error")
+            }
+            else {
+                if (mode == "add") {
                     coroutine.launch {
                         var quiz = QuizEntity(null, etSoal.text.toString(), 1, idxModule, null)
                         db.quizDao().insert(quiz)
@@ -150,35 +151,36 @@ class DetailQuizActivityTeacher : AppCompatActivity() {
                             db.quizDao().update(max_quiz)
                         }
                     }
-                    Toast(this).showCustomToast("Berhasil tambah quiz", this, "success")
+                        Toast(this).showCustomToast("Berhasil tambah quiz", this, "success")
 //                    finish()
-                }
-            } else if (mode == "edit") {
-                //ganti textnya
-                listPilihanTemp[0].pilihan_nama = etPil1.text.toString()
-                listPilihanTemp[1].pilihan_nama = etPil2.text.toString()
-                listPilihanTemp[2].pilihan_nama = etPil3.text.toString()
-                quiz.quiz_nama = etSoal.text.toString()
-                if (jawaban == 1) {
-                    quiz.pilihan_id = listPilihanTemp[0].pilihan_id
-                } else if (jawaban == 2) {
-                    quiz.pilihan_id = listPilihanTemp[1].pilihan_id
+                } else if (mode == "edit") {
+                    //ganti textnya
+                    listPilihanTemp[0].pilihan_nama = etPil1.text.toString()
+                    listPilihanTemp[1].pilihan_nama = etPil2.text.toString()
+                    listPilihanTemp[2].pilihan_nama = etPil3.text.toString()
+                    quiz.quiz_nama = etSoal.text.toString()
+                    if (jawaban == 1) {
+                        quiz.pilihan_id = listPilihanTemp[0].pilihan_id
+                    } else if (jawaban == 2) {
+                        quiz.pilihan_id = listPilihanTemp[1].pilihan_id
 
-                } else if (jawaban == 3) {
-                    quiz.pilihan_id = listPilihanTemp[2].pilihan_id
-                }
-                coroutine.launch {
-                    db.quizDao().update(quiz)
-                    for (i in 0 until listPilihanTemp.size) {
-                        db.pilihanDao().update(listPilihanTemp[i])
+                    } else if (jawaban == 3) {
+                        quiz.pilihan_id = listPilihanTemp[2].pilihan_id
                     }
+                    coroutine.launch {
+                        db.quizDao().update(quiz)
+                        for (i in 0 until listPilihanTemp.size) {
+                            db.pilihanDao().update(listPilihanTemp[i])
+                        }
+                    }
+                    Toast(this).showCustomToast("Berhasil edit quiz", this, "success")
                 }
-                Toast(this).showCustomToast("Berhasil edit quiz", this, "success")
+                val resultIntent = Intent()
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
             }
-            val resultIntent = Intent()
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
-        }
+            }
+
     }
 
     suspend fun refreshQuiz() {
