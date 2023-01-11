@@ -312,13 +312,15 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
         }
     }
 
-    private fun sendDataToAPI(responses: JSONObject) {
+    private fun sendDataToAPI(responses: String) {
+        println(responses)
+        var test = JSONObject(responses)
         var response: JSONObject? = null
         val strReq = object: StringRequest(
             Method.POST, "https://samgun-official.my.id/api/payment/insert",
             Response.Listener {
                 println("MASOK")
-                response = JSONObject(it)
+//                response = JSONObject(it)
                 println(it)
             },
             Response.ErrorListener {
@@ -329,17 +331,17 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
         ) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
-                params["status_code"] = responses.getString("responses")
-                params["status_message"] = responses.getString("status_message")
-                params["transaction_id"] = responses.getString("transaction_id")
-                params["order_id"] = responses.getString("order_id")
-                params["gross_amount"] = responses.getString("gross_amount")
-                params["payment_type"] = responses.getString("payment_type")
-                params["transaction_time"] = responses.getString("transaction_time")
-                params["transaction_status"] = responses.getString("transaction_status")
-                params["bank"] = responses.getJSONArray("va_numbers").getJSONObject(0).getString("bank")
-                params["va_number"] = responses.getJSONArray("va_numbers").getJSONObject(0).getString("va_number")
-                params["fraud_status"] = responses.getString("fraud_status")
+                params["status_code"] = test.getString("responses")
+                params["status_message"] = test.getString("status_message")
+                params["transaction_id"] = test.getString("transaction_id")
+                params["order_id"] = test.getString("order_id")
+                params["gross_amount"] = test.getString("gross_amount")
+                params["payment_type"] = test.getString("payment_type")
+                params["transaction_time"] = test.getString("transaction_time")
+                params["transaction_status"] = test.getString("transaction_status")
+                params["bank"] = test.getJSONArray("va_numbers").getJSONObject(0).getString("bank")
+                params["va_number"] = test.getJSONArray("va_numbers").getJSONObject(0).getString("va_number")
+                params["fraud_status"] = test.getString("fraud_status")
                 params["user_seed"] = userSeed
                 params["user_username"] = tempCert.user_username
                 params["module_id"] = classId.toString()
@@ -358,8 +360,9 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
             Method.POST, "https://samgun-official.my.id/payment_handler.php/status",
             Response.Listener {
                 response = JSONObject(it)
+                println(response)
                 if(response!!.getString("transaction_status") == "settlement" || response!!.getString("transaction_status") == "pending") {
-                    sendDataToAPI(JSONObject(it))
+                    sendDataToAPI(it)
                 }
             },
             Response.ErrorListener {
