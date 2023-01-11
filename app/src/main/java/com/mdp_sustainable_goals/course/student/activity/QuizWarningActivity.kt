@@ -1,16 +1,20 @@
 package com.mdp_sustainable_goals.course.student.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.QuizEntity
+import com.mdp_sustainable_goals.course.local_storage.entity.SubmissionEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +23,7 @@ class QuizWarningActivity : AppCompatActivity() {
     var idxModule: Int = -1
     var class_id: String = ""
 
+    var isDone: Int = 0
     private lateinit var tvTotalQuestions: TextView
     private lateinit var btnStartQuiz: Button
     private lateinit var listQuiz: MutableList<QuizEntity>
@@ -45,8 +50,18 @@ class QuizWarningActivity : AppCompatActivity() {
         coroutine.launch {
             listQuiz.clear()
             listQuiz.addAll(db.quizDao().fetchByModule(idxModule).toMutableList())
+            val sharedFile = packageName
+            val shared: SharedPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE)
+            val username = shared.getString(LoginActivity.user_username, "-")!!
+            isDone = db.submissionDao().getIsDone(
+                idxModule.toInt(),
+                username
+            )
             // db.submissionDao().nukeTable()
             runOnUiThread {
+                if (isDone > 0){
+                    btnStartQuiz.isEnabled = false
+                }
                 if (listQuiz.size > 0) {
                     tvTotalQuestions.text = "Questions in Total: ${listQuiz.size}"
                 } else {

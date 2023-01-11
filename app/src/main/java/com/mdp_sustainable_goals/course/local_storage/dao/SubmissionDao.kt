@@ -31,4 +31,7 @@ interface SubmissionDao {
 
     @Query("SELECT * FROM submissions where class_id = :class_id and user_username = :user_username")
     suspend fun getByUsername(class_id: Int, user_username: String): List<SubmissionEntity>
+
+    @Query("SELECT count(*) FROM submissions where module_id = :module_id and user_username = :user_username")
+    suspend fun getIsDone(module_id: Int, user_username: String): Int
 }
