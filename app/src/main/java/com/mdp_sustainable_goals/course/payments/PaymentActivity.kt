@@ -8,7 +8,6 @@ import android.graphics.*
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -17,6 +16,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.android.volley.RequestQueue
@@ -33,10 +33,8 @@ import com.midtrans.sdk.corekit.core.MidtransSDK
 import com.midtrans.sdk.corekit.core.TransactionRequest
 import com.midtrans.sdk.corekit.core.UIKitCustomSetting
 import com.midtrans.sdk.corekit.core.themes.CustomColorTheme
-import com.midtrans.sdk.corekit.models.BillingAddress
 import com.midtrans.sdk.corekit.models.CustomerDetails
 import com.midtrans.sdk.corekit.models.ItemDetails
-import com.midtrans.sdk.corekit.models.ShippingAddress
 import com.midtrans.sdk.corekit.models.snap.TransactionResult
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -57,6 +55,7 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
     var pageHeight = 595
     var PERMISSION_CODE = 101
 
+    var userEmail = ""
     var userFullName = ""
     var username = ""
     var className = ""
@@ -75,6 +74,7 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
         val shared: SharedPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE)
         userFullName = shared.getString(LoginActivity.user_name, "-")!!
         username = shared.getString(LoginActivity.user_username, "-")!!
+        userEmail = shared.getString(LoginActivity.user_email, "-")!!
         className = intent.getStringExtra("className")!!
         certID = intent.getIntExtra("certID", -1)
         classId = intent.getIntExtra("classId", -1)
@@ -350,12 +350,10 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
 
     fun uiKitDetails(transactionRequest: TransactionRequest) {
         val customerDetails = CustomerDetails()
-        customerDetails.setCustomerIdentifier("samgun-official")
-        customerDetails.setPhone("089612494740")
-        customerDetails.setFirstName("Samuel")
-        customerDetails.setLastName("Gunawan")
-        customerDetails.setEmail("gunawansamuel80+midtrans@gmail.com")
-        transactionRequest.setCustomerDetails(customerDetails)
+        customerDetails.customerIdentifier = tempCert.user_username
+        customerDetails.firstName = tempCert.user_nama
+        customerDetails.email = userEmail
+        transactionRequest.customerDetails = customerDetails
     }
 
     private fun uiKitCustomSetting(): UIKitCustomSetting {
