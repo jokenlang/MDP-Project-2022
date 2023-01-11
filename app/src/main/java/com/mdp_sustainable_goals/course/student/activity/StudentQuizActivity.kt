@@ -2,6 +2,7 @@ package com.mdp_sustainable_goals.course.student.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -9,6 +10,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
+import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.PilihanEntity
@@ -106,13 +108,17 @@ class StudentQuizActivity : AppCompatActivity() {
                     val currentDate = sdf.format(Date())
                     val score: Int = ((correctCount.toDouble() / (listQuiz.size).toDouble()) * (100).toDouble()).roundToInt()
                     val tempModule = db.moduleDao().get(idxModule)
+                    val sharedFile = packageName
+                    val shared: SharedPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE)
+                    val username = shared.getString(LoginActivity.user_username, "-")
                     db.submissionDao().insert(
                         SubmissionEntity(
                             null,
                             idxModule,
                             tempModule!!.class_id,
                             score,
-                            currentDate
+                            currentDate,
+                            username!!
                         )
                     )
                     runOnUiThread {

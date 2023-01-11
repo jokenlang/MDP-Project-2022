@@ -11,4 +11,5 @@ data class SubmissionEntity(
     var class_id: Int,
     var submission_score: Int,
     var submission_date: String,
+    var user_username: String,
 )

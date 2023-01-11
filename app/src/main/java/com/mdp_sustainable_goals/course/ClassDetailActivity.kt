@@ -1,6 +1,7 @@
 package com.mdp_sustainable_goals.course
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.opengl.Visibility
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -11,7 +12,9 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
+import com.mdp_sustainable_goals.course.local_storage.dao.SubmissionDao
 import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
+import com.mdp_sustainable_goals.course.local_storage.entity.SubmissionEntity
 import com.mdp_sustainable_goals.course.student.activity.ModuleStudentActivity
 import com.mdp_sustainable_goals.course.teacher.activity.ModuleTeacherActivity
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +30,7 @@ class ClassDetailActivity : AppCompatActivity() {
     private lateinit var tvCDSNilai: TextView
     private lateinit var btnRedirectCertificate: Button
     private lateinit var btnRedirectModule: Button
+    private lateinit var tempSummary: MutableList<SubmissionEntity>
 
     private var classId: Int = -1
     private var activityScope: String = ""
@@ -50,6 +54,7 @@ class ClassDetailActivity : AppCompatActivity() {
         tvCDSNilai = findViewById(R.id.tvCDSNilai)
         btnRedirectCertificate = findViewById(R.id.btnRedirectCertificate)
         btnRedirectModule = findViewById(R.id.btnRedirectModule)
+        tempSummary = mutableListOf()
 
         classId = intent.getIntExtra("class_id", -1)
         activityScope = intent.getStringExtra("activity_scope")!!
@@ -98,5 +103,15 @@ class ClassDetailActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        coroutine.launch {
+            val sharedFile = packageName
+            val shared: SharedPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE)
+            val username = shared.getString(LoginActivity.user_username, "-")
+            tempSummary = db.submissionDao().getByClassId(classId, username!!).toMutableList()
+        }
     }
 }
