@@ -16,6 +16,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -40,6 +41,7 @@ import com.midtrans.sdk.uikit.SdkUIFlowBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -57,6 +59,7 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
 
     var userEmail = ""
     var userFullName = ""
+    var userSeed = ""
     var username = ""
     var className = ""
     var certID = -1
@@ -70,11 +73,16 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar.title = "Download Sertifikat"
+
         val sharedFile = packageName
         val shared: SharedPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE)
         userFullName = shared.getString(LoginActivity.user_name, "-")!!
         username = shared.getString(LoginActivity.user_username, "-")!!
         userEmail = shared.getString(LoginActivity.user_email, "-")!!
+        userSeed = shared.getString(LoginActivity.user_seed, "-")!!
         className = intent.getStringExtra("className")!!
         certID = intent.getIntExtra("certID", -1)
         classId = intent.getIntExtra("classId", -1)
@@ -263,7 +271,7 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
     override fun onTransactionFinished(result: TransactionResult) {
         if (result.response != null) {
             fetchedData(result.response.transactionId, "SB-Mid-client-F9HkZnDqOlLDYxLd")
-            when (result.status) {
+            /** when (result.status) {
                 TransactionResult.STATUS_SUCCESS -> {
                     Toast.makeText(
                         this,
@@ -288,20 +296,59 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
                     ).show()
                     println("Transaction Failed. ID: " + result.response.transactionId.toString() + ". Message: " + result.response.statusMessage)
                 }
-            }
+            } */
             result.response.validationMessages
         } else if (result.isTransactionCanceled) {
-            Toast.makeText(this, "Transaction Canceled", Toast.LENGTH_LONG).show()
+            // Toast.makeText(this, "Transaction Canceled", Toast.LENGTH_LONG).show()
             println("Transaction Canceled")
         } else {
             if (result.status.equals(TransactionResult.STATUS_INVALID, true)) {
-                Toast.makeText(this, "Transaction Invalid", Toast.LENGTH_LONG).show()
+                // Toast.makeText(this, "Transaction Invalid", Toast.LENGTH_LONG).show()
                 println("Transaction Invalid")
             } else {
-                Toast.makeText(this, "Transaction Finished with Failure.", Toast.LENGTH_LONG).show()
+                // Toast.makeText(this, "Transaction Finished with Failure.", Toast.LENGTH_LONG).show()
                 println("Transaction Finished with Failure.")
             }
         }
+    }
+
+    private fun sendDataToAPI(responses: JSONObject) {
+        var response: JSONObject? = null
+        val strReq = object: StringRequest(
+            Method.POST, "https://samgun-official.my.id/api/payment/insert",
+            Response.Listener {
+                println("MASOK")
+                response = JSONObject(it)
+                println(it)
+            },
+            Response.ErrorListener {
+                println("MBOH")
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                println(it.message)
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["status_code"] = responses.getString("responses")
+                params["status_message"] = responses.getString("status_message")
+                params["transaction_id"] = responses.getString("transaction_id")
+                params["order_id"] = responses.getString("order_id")
+                params["gross_amount"] = responses.getString("gross_amount")
+                params["payment_type"] = responses.getString("payment_type")
+                params["transaction_time"] = responses.getString("transaction_time")
+                params["transaction_status"] = responses.getString("transaction_status")
+                params["bank"] = responses.getJSONArray("va_numbers").getJSONObject(0).getString("bank")
+                params["va_number"] = responses.getJSONArray("va_numbers").getJSONObject(0).getString("va_number")
+                params["fraud_status"] = responses.getString("fraud_status")
+                params["user_seed"] = userSeed
+                params["user_username"] = tempCert.user_username
+                params["module_id"] = classId.toString()
+                params["active_status"] = (1).toString()
+                return params
+            }
+        }
+        val queue: RequestQueue = Volley.newRequestQueue(this)
+        queue.add(strReq)
     }
 
     private fun fetchedData(transaction_id: String, client_id: String) {
@@ -311,27 +358,9 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
             Method.POST, "https://samgun-official.my.id/payment_handler.php/status",
             Response.Listener {
                 response = JSONObject(it)
-                println("==================================================")
-                println(response)
-                println(response!!.getString("transaction_id"))
-                println(response!!.getString("order_id"))
-                println(response!!.getString("gross_amount"))
-                println(response!!.getString("transaction_status"))
-                println("==================================================")
-//                val list: JSONArray = response.getJSONArray("datagroup")
-//                groupList.clear()
-//                for(i in 0 until list.length()) {
-//                    val obj = list.getJSONObject(i)
-//                    val id = obj.getString("id")
-//                    val group_name = obj.getString("group_name")
-//                    val agency = obj.getString("agency")
-//                    val gender = obj.getString("gender")
-//                    val group_desc = obj.getString("group_desc")
-//                    val image = obj.getString("image")
-//                    val boyGroup = GroupEntity(id, group_name, agency, gender, group_desc, image)
-//                    groupList.add(boyGroup)
-//                }
-//                groupAdapter.notifyDataSetChanged()
+                if(response!!.getString("transaction_status") == "settlement" || response!!.getString("transaction_status") == "pending") {
+                    sendDataToAPI(JSONObject(it))
+                }
             },
             Response.ErrorListener {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()

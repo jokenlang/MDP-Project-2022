@@ -8,11 +8,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<!--    <uses-permission-->
-<!--        android:name="android.permission.WRITE_EXTERNAL_STORAGE"-->
-<!--        android:maxSdkVersion="28"-->
-<!--        tools:ignore="ScopedStorage" />-->
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -83,7 +81,8 @@
             android:theme="@style/Theme.Course_Custom" />
         <activity
             android:name=".payments.PaymentActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Course_Custom" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

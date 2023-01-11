@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
         const val user_password = "user_password"
         const val user_role = "user_role"
         const val user_saldo = "user_saldo"
+        const val user_seed = "user_seed"
     }
 
     lateinit var inUsernameLogin: EditText
@@ -191,6 +192,7 @@ class LoginActivity : AppCompatActivity() {
         val sharedFile = packageName
         val shared: SharedPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE)
         val editor: SharedPreferences.Editor = shared.edit()
+        editor.putString(user_seed, userEntity.seed)
         editor.putString(user_username, userEntity.username)
         editor.putString(user_email, userEntity.email)
         editor.putString(user_name, userEntity.name)
