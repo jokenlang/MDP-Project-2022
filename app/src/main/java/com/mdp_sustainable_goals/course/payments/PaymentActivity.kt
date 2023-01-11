@@ -19,18 +19,34 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.CertificateEntity
 import com.mdp_sustainable_goals.course.showCustomToast
+import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback
+import com.midtrans.sdk.corekit.core.MidtransSDK
+import com.midtrans.sdk.corekit.core.TransactionRequest
+import com.midtrans.sdk.corekit.core.UIKitCustomSetting
+import com.midtrans.sdk.corekit.core.themes.CustomColorTheme
+import com.midtrans.sdk.corekit.models.BillingAddress
+import com.midtrans.sdk.corekit.models.CustomerDetails
+import com.midtrans.sdk.corekit.models.ItemDetails
+import com.midtrans.sdk.corekit.models.ShippingAddress
+import com.midtrans.sdk.corekit.models.snap.TransactionResult
+import com.midtrans.sdk.uikit.SdkUIFlowBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 
-class PaymentActivity : AppCompatActivity() {
+class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
     private lateinit var imageView3: ImageView
     private lateinit var btnPay: Button
 
@@ -71,12 +87,41 @@ class PaymentActivity : AppCompatActivity() {
             tempCert = db.certificateDao().getByClassId(classId, username)!!
         }
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), 101)
+        }
+
+        SdkUIFlowBuilder.init()
+            .setClientKey("SB-Mid-client-F9HkZnDqOlLDYxLd")
+            .setContext(this)
+            .setTransactionFinishedCallback(this)
+            .setUIkitCustomSetting(uiKitCustomSetting())
+            .setMerchantBaseUrl("https://samgun-official.my.id/payment_response.php/")
+            .enableLog(true)
+            .setColorTheme(
+                CustomColorTheme(
+                    "#FFE51255",
+                    "#B61548",
+                    "#FFE51255"
+                )
+            )
+            .setLanguage("en")
+            .buildSDK()
+
         imageView3.setOnClickListener {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                 generatePDF()
             }
         }
         btnPay.setOnClickListener {
+            val transactionRequest = TransactionRequest("ORDER_" + System.currentTimeMillis().toString(), (1000000).toDouble())
+            val itemDetails1 = ItemDetails("Certificate-${tempCert.certificate_number}", (1000000).toDouble(), 1, "Completing Class ${tempCert.module_nama}")
+            val itemDetailsList: ArrayList<ItemDetails> = ArrayList()
+            itemDetailsList.add(itemDetails1)
+            uiKitDetails(transactionRequest)
+            transactionRequest.itemDetails = itemDetailsList
+            MidtransSDK.getInstance().transactionRequest = transactionRequest
+            MidtransSDK.getInstance().startPaymentUiFlow(this)
         }
 
         bmp = BitmapFactory.decodeResource(resources, R.drawable.certificate_template)
@@ -213,5 +258,110 @@ class PaymentActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onTransactionFinished(result: TransactionResult) {
+        if (result.response != null) {
+            fetchedData(result.response.transactionId, "SB-Mid-client-F9HkZnDqOlLDYxLd")
+            when (result.status) {
+                TransactionResult.STATUS_SUCCESS -> {
+                    Toast.makeText(
+                        this,
+                        "Transaction Finished. ID: " + result.response.transactionId,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    println("Transaction Finished. ID: " + result.response.transactionId)
+                }
+                TransactionResult.STATUS_PENDING -> {
+                    Toast.makeText(
+                        this,
+                        "Transaction Pending. ID: " + result.response.transactionId,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    println("Transaction Pending. ID: " + result.response.transactionId)
+                }
+                TransactionResult.STATUS_FAILED -> {
+                    Toast.makeText(
+                        this,
+                        "Transaction Failed. ID: " + result.response.transactionId.toString() + ". Message: " + result.response.statusMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    println("Transaction Failed. ID: " + result.response.transactionId.toString() + ". Message: " + result.response.statusMessage)
+                }
+            }
+            result.response.validationMessages
+        } else if (result.isTransactionCanceled) {
+            Toast.makeText(this, "Transaction Canceled", Toast.LENGTH_LONG).show()
+            println("Transaction Canceled")
+        } else {
+            if (result.status.equals(TransactionResult.STATUS_INVALID, true)) {
+                Toast.makeText(this, "Transaction Invalid", Toast.LENGTH_LONG).show()
+                println("Transaction Invalid")
+            } else {
+                Toast.makeText(this, "Transaction Finished with Failure.", Toast.LENGTH_LONG).show()
+                println("Transaction Finished with Failure.")
+            }
+        }
+    }
+
+    private fun fetchedData(transaction_id: String, client_id: String) {
+        // https://api.sandbox.midtrans.com/v2/[ORDER_ID]/status
+        var response: JSONObject? = null
+        val strReq = object: StringRequest(
+            Method.POST, "https://samgun-official.my.id/payment_handler.php/status",
+            Response.Listener {
+                response = JSONObject(it)
+                println("==================================================")
+                println(response)
+                println(response!!.getString("transaction_id"))
+                println(response!!.getString("order_id"))
+                println(response!!.getString("gross_amount"))
+                println(response!!.getString("transaction_status"))
+                println("==================================================")
+//                val list: JSONArray = response.getJSONArray("datagroup")
+//                groupList.clear()
+//                for(i in 0 until list.length()) {
+//                    val obj = list.getJSONObject(i)
+//                    val id = obj.getString("id")
+//                    val group_name = obj.getString("group_name")
+//                    val agency = obj.getString("agency")
+//                    val gender = obj.getString("gender")
+//                    val group_desc = obj.getString("group_desc")
+//                    val image = obj.getString("image")
+//                    val boyGroup = GroupEntity(id, group_name, agency, gender, group_desc, image)
+//                    groupList.add(boyGroup)
+//                }
+//                groupAdapter.notifyDataSetChanged()
+            },
+            Response.ErrorListener {
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["transaction_id"] = transaction_id
+                params["client_id"] = client_id
+                return params
+            }
+        }
+        val queue: RequestQueue = Volley.newRequestQueue(this)
+        queue.add(strReq)
+    }
+
+    fun uiKitDetails(transactionRequest: TransactionRequest) {
+        val customerDetails = CustomerDetails()
+        customerDetails.setCustomerIdentifier("samgun-official")
+        customerDetails.setPhone("089612494740")
+        customerDetails.setFirstName("Samuel")
+        customerDetails.setLastName("Gunawan")
+        customerDetails.setEmail("gunawansamuel80+midtrans@gmail.com")
+        transactionRequest.setCustomerDetails(customerDetails)
+    }
+
+    private fun uiKitCustomSetting(): UIKitCustomSetting {
+        val uIKitCustomSetting = UIKitCustomSetting()
+        uIKitCustomSetting.isSkipCustomerDetailsPages = true
+        uIKitCustomSetting.isShowPaymentStatus = true
+        return uIKitCustomSetting
     }
 }
