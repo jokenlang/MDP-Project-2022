@@ -77,7 +77,7 @@ class ClassDetailActivity : AppCompatActivity() {
             btnRedirectCertificate.visibility = View.GONE
         } else {
             tvCDSNilaiTitle.visibility = View.VISIBLE
-            tvCDSNilai.visibility = View.VISIBLE
+            tvCDSNilai.visibility = View.GONE
             btnRedirectCertificate.visibility = View.VISIBLE
             btnRedirectCertificate.setOnClickListener {
             }
@@ -94,6 +94,8 @@ class ClassDetailActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+        checkValid()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -107,11 +109,16 @@ class ClassDetailActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        checkValid()
+    }
+
+    private fun checkValid() {
         coroutine.launch {
             val sharedFile = packageName
             val shared: SharedPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE)
             val username = shared.getString(LoginActivity.user_username, "-")
-            tempSummary = db.submissionDao().getByClassId(classId, username!!).toMutableList()
+            tempSummary = db.submissionDao().getByUsername(classId, username!!).toMutableList()
+            val allModulesInClass = db.moduleDao().getModulesActiveModule(classId).toMutableList()
         }
     }
 }
