@@ -98,6 +98,9 @@ class StudentQuizActivity : AppCompatActivity() {
 
         btnNextQuestion.setOnClickListener {
             if(questionCounter >= listQuiz.size) {
+                if(keyAnswer == trappedId[rbIdx]) {
+                    correctCount += 1
+                }
                 coroutine.launch {
                     val sdf = SimpleDateFormat("dd/MM/yyyy")
                     val currentDate = sdf.format(Date())
