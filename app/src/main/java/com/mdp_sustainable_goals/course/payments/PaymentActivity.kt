@@ -331,7 +331,7 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
         ) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
-                params["status_code"] = test.getString("responses")
+                params["status_code"] = test.getString("status_code")
                 params["status_message"] = test.getString("status_message")
                 params["transaction_id"] = test.getString("transaction_id")
                 params["order_id"] = test.getString("order_id")
