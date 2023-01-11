@@ -14,13 +14,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.mdp_sustainable_goals.course.LoginActivity
 import com.mdp_sustainable_goals.course.R
+import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.entity.ModuleEntity
+import com.mdp_sustainable_goals.course.local_storage.entity.SubmissionEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ClassModuleTeacherAdapter(
     private val context: Activity,
     private val modules: ArrayList<ModuleEntity>,
+    private val db : AppDatabase,
     val click: (id: Int) -> Unit,
 ) : RecyclerView.Adapter<ClassModuleTeacherAdapter.CustomViewHolder>() {
+    val ioScope = CoroutineScope(Dispatchers.IO)
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val scrollView: ScrollView = itemView.findViewById(R.id.scrollView)
         val tvListModuleName: TextView = itemView.findViewById(R.id.tvListModuleName)
@@ -63,7 +70,10 @@ class ClassModuleTeacherAdapter(
         holder.tvListModuleName.text = "Module ${item.module_nama}"
         holder.tvListModuleDeskripsi.text = item.module_deskripsi
         // holder.tvListModuleDeskripsi.movementMethod = ScrollingMovementMethod()
-        holder.tvJumlahKumpulModule.text = "Jumlah Terkumpul: 0/20"
+        ioScope.launch {
+            var count = db.submissionDao().getCountByModuleId(item.module_id!!)
+            holder.tvJumlahKumpulModule.setText("Jumlah Terkumpul: $count/20")
+        }
         holder.itemView.setOnClickListener {
             item.module_id?.let { it1 -> click(it1) }
         }

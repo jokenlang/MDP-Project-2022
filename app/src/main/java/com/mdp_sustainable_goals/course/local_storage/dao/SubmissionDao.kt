@@ -20,6 +20,9 @@ interface SubmissionDao {
     @Query("SELECT * FROM submissions")
     suspend fun getAll(): List<SubmissionEntity>
 
+    @Query("SELECT count(*) FROM submissions where module_id = :module_id")
+    suspend fun getCountByModuleId(module_id: Int): Int
+
     @Query("SELECT * FROM submissions where module_id = :module_id")
     suspend fun getByModuleId(module_id: Int): SubmissionEntity?
 

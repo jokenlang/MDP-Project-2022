@@ -97,7 +97,7 @@ class ModuleTeacherActivity : AppCompatActivity() {
             resetUI()
             this@ModuleTeacherActivity.runOnUiThread {
                 classModuleTeacherAdapter =
-                    ClassModuleTeacherAdapter(this@ModuleTeacherActivity, modules) { idxModule ->
+                    ClassModuleTeacherAdapter(this@ModuleTeacherActivity, modules, db) { idxModule ->
                         val intent =
                             Intent(this@ModuleTeacherActivity, QuizTeacherActivity::class.java)
                         intent.putExtra("idxModule", idxModule.toString())
