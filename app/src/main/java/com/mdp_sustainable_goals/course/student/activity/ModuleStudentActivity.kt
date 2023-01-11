@@ -55,14 +55,15 @@ class ModuleStudentActivity : AppCompatActivity() {
         rvModulesStudent.layoutManager = verticalLayoutManager
 
         ioScope.launch {
-            resetUI()
             this@ModuleStudentActivity.runOnUiThread {
                 classModuleStudentAdapter =
                     ClassModuleStudentAdapter(this@ModuleStudentActivity, modules) { idxModule ->
                         val intent =
                             Intent(this@ModuleStudentActivity, QuizWarningActivity::class.java)
                         intent.putExtra("idxModule", idxModule)
+                        intent.putExtra("idx", idx)
                         startActivity(intent)
+                        finish()
                     }
                 rvModulesStudent.adapter = classModuleStudentAdapter
                 rvModulesStudent.addItemDecoration(object :
@@ -82,6 +83,15 @@ class ModuleStudentActivity : AppCompatActivity() {
                         .requestDisallowInterceptTouchEvent(false)
                     false
                 }
+                classModuleStudentAdapter.notifyDataSetChanged()
+            }
+            modules.clear()
+            modules.addAll(db.moduleDao().getModulesActiveModule(idx.toInt()))
+            kelas = db.classDao().get(idx.toInt())!!
+            this@ModuleStudentActivity.runOnUiThread {
+                globalFragment = ClassCardInfoFragment(kelas)
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.classCardInfoView2, globalFragment).commit()
                 classModuleStudentAdapter.notifyDataSetChanged()
             }
         }

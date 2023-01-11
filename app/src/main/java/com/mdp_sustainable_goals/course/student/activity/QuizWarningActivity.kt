@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class QuizWarningActivity : AppCompatActivity() {
     var idxModule: Int = -1
+    var class_id: String = ""
 
     private lateinit var tvTotalQuestions: TextView
     private lateinit var btnStartQuiz: Button
@@ -39,30 +40,39 @@ class QuizWarningActivity : AppCompatActivity() {
         tvTotalQuestions = findViewById(R.id.tvTotalQuestions)
         btnStartQuiz = findViewById(R.id.btnStartQuiz)
         listQuiz = mutableListOf()
+        class_id = intent.getStringExtra("idx")!!
 
         coroutine.launch {
             listQuiz.clear()
             listQuiz.addAll(db.quizDao().fetchByModule(idxModule).toMutableList())
+            // db.submissionDao().nukeTable()
             runOnUiThread {
-                if(listQuiz.size > 0) {
+                if (listQuiz.size > 0) {
                     tvTotalQuestions.text = "Questions in Total: ${listQuiz.size}"
                 } else {
-                    tvTotalQuestions.text = "Oops, no question for now. Maybe your teacher forgot to put some of it. Get back later!"
+                    tvTotalQuestions.text =
+                        "Oops, no question for now. Maybe your teacher forgot to put some of it. Get back later!"
                     btnStartQuiz.isEnabled = false
                 }
             }
         }
 
-        btnStartQuiz.setOnClickListener {val intent =
-            Intent(this, StudentQuizActivity::class.java)
+        btnStartQuiz.setOnClickListener {
+            val intent =
+                Intent(this, StudentQuizActivity::class.java)
             intent.putExtra("idxModule", idxModule)
+            intent.putExtra("idx", class_id)
             startActivity(intent)
+            finish()
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
+                val intent = Intent(this, ModuleStudentActivity::class.java)
+                intent.putExtra("idx", class_id.toString())
+                startActivity(intent)
                 finish()
             }
         }

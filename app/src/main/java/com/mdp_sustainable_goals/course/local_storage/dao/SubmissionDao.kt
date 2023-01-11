@@ -14,6 +14,9 @@ interface SubmissionDao {
     @Delete
     suspend fun delete(submissionEntity: SubmissionEntity)
 
+    @Query("DELETE FROM submissions")
+    suspend fun nukeTable()
+
     @Query("SELECT * FROM submissions")
     suspend fun getAll(): List<SubmissionEntity>
 
