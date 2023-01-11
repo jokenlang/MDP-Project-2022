@@ -13,13 +13,17 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.mdp_sustainable_goals.course.local_storage.AppDatabase
 import com.mdp_sustainable_goals.course.local_storage.dao.SubmissionDao
+import com.mdp_sustainable_goals.course.local_storage.entity.CertificateEntity
 import com.mdp_sustainable_goals.course.local_storage.entity.ClassEntity
 import com.mdp_sustainable_goals.course.local_storage.entity.SubmissionEntity
+import com.mdp_sustainable_goals.course.payments.PaymentActivity
 import com.mdp_sustainable_goals.course.student.activity.ModuleStudentActivity
 import com.mdp_sustainable_goals.course.teacher.activity.ModuleTeacherActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ClassDetailActivity : AppCompatActivity() {
@@ -80,6 +84,35 @@ class ClassDetailActivity : AppCompatActivity() {
             tvCDSNilai.visibility = View.GONE
             btnRedirectCertificate.visibility = View.VISIBLE
             btnRedirectCertificate.setOnClickListener {
+                val sharedFile = packageName
+                val shared: SharedPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE)
+                val username = shared.getString(LoginActivity.user_username, "-")
+                val userFullName = shared.getString(LoginActivity.user_name, "-")
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                val currentDate = sdf.format(Date())
+                var certID = -1
+                coroutine.launch {
+                    val tempCert = db.certificateDao().getByClassId(classId, username!!)
+                    if(tempCert == null) {
+                        db.certificateDao().insert(CertificateEntity(
+                            null,
+                            System.currentTimeMillis().toString(),
+                            username,
+                            classId,
+                            userFullName!!,
+                            classObj.class_nama,
+                            currentDate
+                        ))
+                    } else {
+                        certID = tempCert.certificate_id!!
+                    }
+                }
+                val intent = Intent(this, PaymentActivity::class.java)
+                intent.putExtra("username", username)
+                intent.putExtra("classId", classId)
+                intent.putExtra("className", classObj.class_nama)
+                intent.putExtra("certID", certID)
+                startActivity(intent)
             }
         }
 
@@ -119,6 +152,11 @@ class ClassDetailActivity : AppCompatActivity() {
             val username = shared.getString(LoginActivity.user_username, "-")
             tempSummary = db.submissionDao().getByUsername(classId, username!!).toMutableList()
             val allModulesInClass = db.moduleDao().getModulesActiveModule(classId).toMutableList()
+            if(tempSummary.size == allModulesInClass.size) {
+                runOnUiThread {
+                    btnRedirectCertificate.isEnabled = true
+                }
+            }
         }
     }
 }
