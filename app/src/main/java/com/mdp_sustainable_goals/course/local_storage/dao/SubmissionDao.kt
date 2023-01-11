@@ -27,5 +27,5 @@ interface SubmissionDao {
     suspend fun getByClassId(class_id: Int): SubmissionEntity?
 
     @Query("SELECT * FROM submissions where class_id = :class_id and user_username = :user_username")
-    suspend fun getByClassId(class_id: Int, user_username: String): List<SubmissionEntity>
+    suspend fun getByUsername(class_id: Int, user_username: String): List<SubmissionEntity>
 }
