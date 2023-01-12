@@ -339,8 +339,8 @@ class PaymentActivity : AppCompatActivity(), TransactionFinishedCallback {
                 params["payment_type"] = test.getString("payment_type")
                 params["transaction_time"] = test.getString("transaction_time")
                 params["transaction_status"] = test.getString("transaction_status")
-                params["bank"] = test.getJSONArray("va_numbers").getJSONObject(0).getString("bank")
-                params["va_number"] = test.getJSONArray("va_numbers").getJSONObject(0).getString("va_number")
+                params["bank"] = "-"
+                params["va_number"] = "-"
                 params["fraud_status"] = test.getString("fraud_status")
                 params["user_seed"] = userSeed
                 params["user_username"] = tempCert.user_username
